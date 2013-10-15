@@ -4,11 +4,16 @@
  */
 package KCK.Jednostki;
 
+/*
+ * @autor Szymon Wójcik
+ * Jednostka Rycerz
+ */
+public class Rycerz extends Jednostka 
+{
 
-public class Rycerz extends Jednostka {
-
-    public Rycerz(int zycie1, int obrazenia1, int pancerz1, String typ_jednostki1) {
-        super(zycie1, obrazenia1, pancerz1, typ_jednostki1);
+    public Rycerz(int zycie1, int obrazenia1, int pancerz1) 
+    {
+        super(zycie1, obrazenia1, pancerz1);
     }
     
 }

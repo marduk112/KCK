@@ -4,12 +4,16 @@
  */
 package KCK.Jednostki;
 
+/*
+ * @autor Szymon Wójcik
+ * Jednostka Łucznik
+ */
+public class Lucznik extends Jednostka 
+{
 
-public class Lucznik extends Jednostka {
-
-    public Lucznik(int zycie1, int obrazenia1, int pancerz1, String typ_jednostki1) 
+    public Lucznik(int zycie1, int obrazenia1, int pancerz1) 
     {
-        super(zycie1, obrazenia1, pancerz1, typ_jednostki1);
+        super(zycie1, obrazenia1, pancerz1);
     }
     
 }

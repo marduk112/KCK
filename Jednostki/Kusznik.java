@@ -12,8 +12,9 @@ package KCK.Jednostki;
 
 public class Kusznik extends Jednostka {
 
-    public Kusznik(int zycie1, int obrazenia1, int pancerz1, String typ_jednostki1) {
-        super(zycie1, obrazenia1, pancerz1, typ_jednostki1);
+    public Kusznik(int zycie1, int obrazenia1, int pancerz1) 
+    {
+        super(zycie1, obrazenia1, pancerz1);
     }
     
 }

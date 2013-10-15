@@ -4,11 +4,15 @@
  */
 package KCK.Jednostki;
 
-
+/*
+ * @autor Szymon Wójcik
+ * Jednostka Włócznik
+ */
 public class Wlocznik extends Jednostka {
 
-    public Wlocznik(int zycie1, int obrazenia1, int pancerz1, String typ_jednostki1) {
-        super(zycie1, obrazenia1, pancerz1, typ_jednostki1);
+    public Wlocznik(int zycie1, int obrazenia1, int pancerz1) 
+    {
+        super(zycie1, obrazenia1, pancerz1);
     }
     
 }

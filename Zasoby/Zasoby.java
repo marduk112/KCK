@@ -15,6 +15,10 @@ public class Zasoby
     /*
      * Metoda ta zwieksza ilosc zlota o wartosc zloto1
      */
+    public Zasoby(int zloto1)
+    {
+        zloto=zloto1;
+    }
     public void dodajzlota(int zloto1)
     {
         zloto+=zloto1;
