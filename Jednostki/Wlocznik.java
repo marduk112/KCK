@@ -10,9 +10,12 @@ package KCK.Jednostki;
  */
 public class Wlocznik extends Jednostka {
 
-    public Wlocznik(int zycie1, int obrazenia1, int pancerz1) 
+    public Wlocznik() 
     {
-        super(zycie1, obrazenia1, pancerz1);
+        zycie=90;
+        obrazenia=10;
+        pancerz=2;
+        nagroda=8;
     }
     
 }

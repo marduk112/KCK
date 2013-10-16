@@ -11,16 +11,11 @@ package KCK.Jednostki;
  */
 public abstract class Jednostka
 {
-    private int zycie;
-    private int obrazenia;
-    private int pancerz;    
+    protected int zycie;
+    protected int obrazenia;
+    protected int pancerz;
+    protected int nagroda;
     /*
      * Konstruktor klasy, przez niego będą tworzone poszczególne jednostki
-     */
-    public Jednostka(int zycie1,int obrazenia1,int pancerz1)
-    {
-        zycie=zycie1;
-        obrazenia=obrazenia1;
-        pancerz=pancerz1;        
-    }
+     */    
 }

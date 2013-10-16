@@ -10,11 +10,13 @@ package KCK.Jednostki;
  */
 
 
-public class Kusznik extends Jednostka {
-
-    public Kusznik(int zycie1, int obrazenia1, int pancerz1) 
+public class Kusznik extends Jednostka 
+{    
+    public void Kusznik()
     {
-        super(zycie1, obrazenia1, pancerz1);
+        zycie=100;
+        obrazenia=15;
+        pancerz=5;
+        nagroda=10;
     }
-    
 }

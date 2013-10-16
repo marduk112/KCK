@@ -11,9 +11,12 @@ package KCK.Jednostki;
 public class Rycerz extends Jednostka 
 {
 
-    public Rycerz(int zycie1, int obrazenia1, int pancerz1) 
+    public Rycerz() 
     {
-        super(zycie1, obrazenia1, pancerz1);
+        zycie=120;
+        obrazenia=25;
+        pancerz=10;
+        nagroda=20;
     }
     
 }

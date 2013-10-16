@@ -11,9 +11,12 @@ package KCK.Jednostki;
 public class Lucznik extends Jednostka 
 {
 
-    public Lucznik(int zycie1, int obrazenia1, int pancerz1) 
+    public Lucznik() 
     {
-        super(zycie1, obrazenia1, pancerz1);
+        zycie=80;
+        obrazenia=8;
+        pancerz=0;
+        nagroda=6;
     }
     
 }

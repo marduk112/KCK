@@ -1,6 +1,5 @@
 package KCK;
 import KCK.Jednostki.*;
-import KCK.Zasoby.*;
 import java.util.ArrayList;
 /*
  * To change this template, choose Tools | Templates
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Szymon
+ * Główna klasa
  */
 public class Menu extends javax.swing.JFrame 
 {
@@ -17,13 +17,17 @@ public class Menu extends javax.swing.JFrame
     /**
      * Creates new form Menu
      */
-    private ArrayList<Jednostka> jednostki=new <Jednostka>ArrayList();
-    private Zasoby zasoby=new Zasoby(2000);
+    private ArrayList<Jednostka> jednostki=new <Jednostka>ArrayList();    
     private Jednostka jednostka;
+    private int Liczbawlocznikow=0;
+    private int Liczbakusznikow=0;
+    private int Liczbarycerzy=0;
+    private int Liczbalucznikow=0;
+    private int zloto=2000;
     public Menu() 
     {        
         initComponents(); 
-        jednostka=new Kusznik(100,6,5);        
+        jednostka=new Kusznik();        
         jednostki.add(jednostka);
         LiczbaKusznikow.setEditable(false);
         LiczbaWlocznikow.setEditable(false);
@@ -31,8 +35,12 @@ public class Menu extends javax.swing.JFrame
         LiczbaRycerzy.setEditable(false);
         Komendy.setEditable(false);        
         IloscZlota.setEditable(false);
-        PasekZycia.setValue(50);//wartosc podawana jako procent np. 50 to 50% paska
-        IloscZlota.setText(Integer.toString(2000));
+        PasekZycia.setValue(100);//wartosc podawana jako procent np. 50 to 50% paska
+        IloscZlota.setText(Integer.toString(zloto));
+        LiczbaWlocznikow.setText(Integer.toString(Liczbawlocznikow));
+        LiczbaKusznikow.setText(Integer.toString(Liczbakusznikow));
+        LiczbaRycerzy.setText(Integer.toString(Liczbarycerzy));
+        LiczbaLucznikow.setText(Integer.toString(Liczbalucznikow));
     }
 
     /**
@@ -61,18 +69,15 @@ public class Menu extends javax.swing.JFrame
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        WyborJednostek = new javax.swing.JComboBox();
-        jTextField2 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
         LiczbaWlocznikow = new javax.swing.JTextField();
         LiczbaLucznikow = new javax.swing.JTextField();
         LiczbaKusznikow = new javax.swing.JTextField();
         LiczbaRycerzy = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         IloscZlota = new javax.swing.JTextField();
         PasekZycia = new javax.swing.JProgressBar();
+        jLabel9 = new javax.swing.JLabel();
 
         jTextField6.setText("jTextField6");
 
@@ -121,17 +126,11 @@ public class Menu extends javax.swing.JFrame
 
         jLabel5.setText("Rycerze:");
 
-        WyborJednostek.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Włócznicy", "Łucznicy", "Kusznicy", "Rycerze" }));
-
-        jTextField2.setText("Ile");
-
-        jButton7.setText("OK");
-
-        jLabel6.setText("Wykupienie dod. jednostek");
-
         jLabel7.setText("Punkty życia zamku:");
 
         jLabel8.setText("Ilość złota w skarbcu:");
+
+        jLabel9.setText("Spis komend jakie można wykonać:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,47 +151,31 @@ public class Menu extends javax.swing.JFrame
                     .addComponent(jTextField1)
                     .addComponent(Plansza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PasekZycia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(IloscZlota)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LiczbaWlocznikow, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(LiczbaKusznikow))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(LiczbaLucznikow, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(2, 2, 2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(LiczbaRycerzy, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(WyborJednostek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton7))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(0, 86, Short.MAX_VALUE))
-                            .addComponent(IloscZlota))))
+                                        .addComponent(jLabel5)
+                                        .addGap(13, 13, 13)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(LiczbaRycerzy)
+                                    .addComponent(LiczbaKusznikow, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LiczbaLucznikow, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LiczbaWlocznikow, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel9))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(427, 427, 427)
@@ -212,7 +195,7 @@ public class Menu extends javax.swing.JFrame
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(IloscZlota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -230,13 +213,8 @@ public class Menu extends javax.swing.JFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(LiczbaRycerzy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(WyborJednostek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9))
                     .addComponent(Plansza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -264,26 +242,25 @@ public class Menu extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try 
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) 
+            {
+                if ("Nimbus".equals(info.getName())) 
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) 
+        {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -292,8 +269,10 @@ public class Menu extends javax.swing.JFrame
         java.awt.EventQueue.invokeLater(new Runnable() 
         {            
             @Override
-            public void run() {
-                new Menu().setVisible(true);
+            public void run() 
+            {
+                Menu menu=new Menu();
+                menu.setVisible(true);
             }
         });
     }
@@ -311,20 +290,17 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JProgressBar PasekZycia;
     private javax.swing.JPanel Plansza;
     private javax.swing.JButton Vpietro;
-    private javax.swing.JComboBox WyborJednostek;
     private javax.swing.JButton WyjscieZZamku;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
