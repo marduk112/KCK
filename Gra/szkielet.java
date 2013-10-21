@@ -18,15 +18,7 @@ public class szkielet extends JFrame
      * switch będzie inicjalizował obiekt planszy
      * walka
      */
-    public szkielet() 
-    {
-        super("Gra Zamek"); 
-        JPanel plansza = new plansza_podst();
-        add(plansza); 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
-    }   
+      
     public void wybor_planszy()
     {
         switch()

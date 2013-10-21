@@ -19,26 +19,6 @@ import javax.swing.JPanel;
  */
 public class plansza_podst extends JPanel
 {
-    private BufferedImage image; 
-    public plansza_podst() 
-    {
-        super(); 
-        File imageFile = new File("src/KCK/Gra/menu.jpg");//tu będzie ładowana plansza
-        try 
-        {
-            image = ImageIO.read(imageFile);
-        } catch (IOException e) 
-        {            
-            System.err.println("Błąd odczytu obrazka");
-        } 
-        Dimension dimension = new Dimension(image.getWidth(), image.getHeight());
-        setPreferredSize(dimension);
-    } 
-    @Override
-    public void paintComponent(Graphics g) 
-    {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(image, 0, 0, this);
-    }
+    
 
 }

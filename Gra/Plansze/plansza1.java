@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package KCK.Gra.Plansze;
-import KCK.Gra.*;
+import javax.swing.JPanel;
 /**
  *
  * @author s384080
@@ -13,6 +13,7 @@ public class plansza1 extends plansza_podst
     /*
      * rekrutacja wojska, liczebność, wydawanie poleceń, ulepszenia
      */
+    
     public int liczebnosc_wojska()
     {
         return liczba_wojska;

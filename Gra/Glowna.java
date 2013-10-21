@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package KCK.Gra;
-
 import java.awt.EventQueue;
 
 /**
@@ -12,11 +11,16 @@ import java.awt.EventQueue;
  */
 public class Glowna 
 {
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
+    public static void main(String[] args) 
+    {
+        EventQueue.invokeLater(new Runnable() 
+        {
             @Override
-            public void run() {
-                new szkielet();
+            public void run() 
+            {
+                        
             }
         });
-    }}
+        
+    }
+}
