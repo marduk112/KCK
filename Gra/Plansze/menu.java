@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package KCK.Gra.Plansze;
-import KCK.Gra.*;
 /**
  *
  * @author s384080

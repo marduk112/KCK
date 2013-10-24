@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package KCK.Gra.Plansze;
-import KCK.Gra.*;
+import KCK.Gra.Wojsko;
+import javax.swing.JOptionPane;
 /**
  *
  * @author s384080
@@ -13,20 +14,32 @@ public class plansza2 extends plansza_podst
     /*
      * skarbiec, statystyki walk, polecenia z tym związane
      */
-    public int ilosc_zlota()
+    
+    public plansza2()
     {
-        return zloto;
+        JOptionPane.showMessageDialog(null,"Witam w zbrojowni");         
+    }    
+    public String kup_jednostke(String jednostka,int liczba)//wykupywanie jednostek
+    {
+        switch (jednostka)//wywoływane będą takźe inne metody
+        {
+            case "wytrenuj husarza":
+                wojsko.addHusarz(liczba);
+                return "Wytrenowano Husarza";
+            case "wytrenuj kusznika":
+                wojsko.addKusznik(liczba);                
+                return "Wytrenowano Kusznika";
+            case "wytrenuj piechura":
+                wojsko.addPiechur(liczba);
+                return "Wytrenowano Piechura";
+            default:
+                JOptionPane.showMessageDialog(null, "Źle wybrałeś");
+                return "Błąd";
+        }
     }
-    public int liczba_zabitych()
+    public String ulepszenia(String ulepszenie,String jednostka)
     {
-        return liczba_zabitych;
-    }
-    public int liczba_stworzonych_jednostek()
-    {
-        return ;// tu zależnie od tego jak w innych klasach będzie tworzenie jednostek załatwione
-    }
-    public int liczba_straconych_jednostek()
-    {
-        return ;
+        wojsko.ulepsz(jednostka);
+        return "Ulepszono "+ulepszenie+" "+jednostka;
     }
 }

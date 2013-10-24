@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gra;
+package KCK.Gra;
 
+import KCK.Gra.Szkielet;
 import java.awt.EventQueue;
 
-import Gra.Plansze.Plansza_podst;
 
 
 
@@ -21,13 +21,16 @@ public class Glowna
 
 	public static void main(String args[])
     {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+		EventQueue.invokeLater(new Runnable() 
+                {
+                        @Override
+			public void run() 
+                        {
 				try {
 					Szkielet frame = new Szkielet();
 					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (Exception e) 
+                                {
 				}
 			}
 		});

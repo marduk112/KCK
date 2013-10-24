@@ -4,6 +4,7 @@
  */
 package KCK.Gra.Plansze;
 
+import KCK.Gra.Wojsko;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,6 +20,6 @@ import javax.swing.JPanel;
  */
 public class plansza_podst extends JPanel
 {
-    
+    Wojsko wojsko=new Wojsko();
 
 }

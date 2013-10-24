@@ -1,6 +1,21 @@
-package Gra;
+package KCK.Gra;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class Szkielet extends JFrame {
 
@@ -8,7 +23,7 @@ public class Szkielet extends JFrame {
 	private JButton label;
 	String sciezkaDoPliku, path_sciezki; //zmienna kontrolujaca grafike
 
-	
+	//źle
 	public Szkielet() {
 		
 		
