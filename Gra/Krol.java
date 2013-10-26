@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package KCK.Gra;
+package Gra;
 
 /**
  *
@@ -13,7 +13,7 @@ public class Krol
     /*
      * zczytanie miejsca krola, zasoby, wydawanie poleceń wojsku
      */
-        public Krol krol=new Krol();   
+           
         private int kamien; // liczba kamieni w zasobach
         private int diament; // liczba diamentow w zasobach
         private int drewno; // liczba drewna w zasobach

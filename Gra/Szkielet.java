@@ -1,108 +1,85 @@
-package KCK.Gra;
+package Gra;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import Gra.Plansze.menu;
+import Gra.Plansze.plansza1;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-public class Szkielet extends JFrame {
-
-	private JPanel contentPane;
-	private JButton label;
-	String sciezkaDoPliku, path_sciezki; //zmienna kontrolujaca grafike
-
-	//źle
-	public Szkielet() {
-		
-		
-		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\menu.jpg"));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300); //gdzie sie pojawi
-		contentPane = new JPanel();
-		contentPane.setAlignmentY(Component.TOP_ALIGNMENT);
-		contentPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-		contentPane.setBorder(null);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		setSize(960,692);
-		path_sciezki = "/Gra/Plansze/images/";
-		
-		label = new JButton("");
-		label.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent m) {
-				Point e;
-				e = m.getPoint();
-				String xx = String.valueOf(e.x);
-				String yy = String.valueOf(e.y);
-				String lacz = "("+xx+","+yy+")";
-				int x = Integer.parseInt(xx);
-				int y = Integer.parseInt(yy);
-				
-				if(x>300 && x<600 && y>300 && y<600){
-					
-					System.out.print(xx);
-				}
-				if(x>630 && x<850 && y>300 && y<365){
-					sciezkaDoPliku = path_sciezki+"stage1.jpg";
-					getImg();
-				}
-				if(x>650 && x<830 && y>380 && y<430){
-					sciezkaDoPliku = path_sciezki+"menu.jpg";
-					getImg();
-				//	label.removeMouseListener(this);
-				}
-				if(x>580 && x<930 && y>440 && y<500){
-					sciezkaDoPliku = path_sciezki+"stage1.jpg";
-					getImg();
-				}
-				if(x>650 && x<830 && y>515 && y<560){
-					sciezkaDoPliku = path_sciezki+"stage1.jpg";
-					getImg();
-				}
-				
-			}
-		});
-		
-		addKeyListener(new KeyAdapter() { //wcisniecie klawisza
-			@Override
-			public void keyPressed(KeyEvent k) {
-				char c = k.getKeyChar();
-				System.out.print(c);
-				
-			}
-		});
-		
-		label.setPreferredSize(new Dimension(960, 692));
-		label.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		label.setBorder(null);
-		label.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label.setHorizontalTextPosition(SwingConstants.CENTER);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(new Color(204, 255, 204));
-		label.setSize(new Dimension(960, 692));
-		label.setSize(960,692);
-		contentPane.add(label, BorderLayout.CENTER);
-		sciezkaDoPliku = path_sciezki+"menu.jpg";
-		getImg();
-		
-	}
-
-	private void getImg(){ //ladowanie grafiki
-		
-		label.setIcon(new ImageIcon(Szkielet.class.getResource(sciezkaDoPliku)));
-	}
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+public class Szkielet extends JFrame implements MouseListener, MouseMotionListener
+{
+        JPanel menu = new menu();  
+        JPanel plansza1 = new plansza1();	
+        //JPanel plansza2 = new plansza2();
+        //JPanel plansza3 = new plansza3();
+	//String sciezkaDoPliku, path_sciezki; //zmienna kontrolujaca grafike        	
+        File icon = new File("src/Gra/Plansze/images/menu.jpg");
+        BufferedImage image = ImageIO.read(icon);
+        JTextArea WypiszInfo = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(WypiszInfo);
+	public Szkielet() throws IOException 
+        {               
+            super("Gra Zamek");            
+            addMouseListener(this);
+            addMouseMotionListener(this);                    
+            add(menu);             
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            pack();
+            setVisible(true); 
+            setIconImage(image);  
+            WypiszInfo.setForeground(Color.WHITE);
+            WypiszInfo.setOpaque(false);//daje przezroczystość      
+            WypiszInfo.setEnabled(true);
+            WypiszInfo.setEditable(false);
+            WypiszInfo.setVisible(true);             
+        }
+        /*
+         * zmiana planszy gry
+         */
+        public void zmiana_planszy() throws InterruptedException
+        {           
+            remove(menu);        
+            add(WypiszInfo);
+            add(plansza1);            
+            pack();               
+            //960x692 - wymiar plansz                       
+            WypiszInfo.setText("Tu będą wypisywane efekty komend"); 
+            WypiszInfo.setBounds(250,600,460,92); 
+        }
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+    @Override
+    public void mousePressed(MouseEvent e) 
+    {
+           try 
+            {
+                if (e.getX()>=555 && e.getX()<=950 && e.getY()>=304 && e.getY()<=367)
+                    zmiana_planszy();
+                if (e.getX()>=555 && e.getX()<=950 && e.getY()>=510 && e.getY()<=568)
+                    System.exit(0);
+            } catch (InterruptedException ex) 
+            {
+                Logger.getLogger(Szkielet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
+    @Override
+    public void mouseDragged(MouseEvent e) {}
+    @Override
+    public void mouseMoved(MouseEvent e) {}
 }

@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package KCK.Gra.Plansze;
-import KCK.Gra.Wojsko;
+package Gra.Plansze;
 import javax.swing.JOptionPane;
 /**
  *
@@ -17,6 +16,7 @@ public class plansza2 extends plansza_podst
     
     public plansza2()
     {
+        super("stage2.jpg");        
         JOptionPane.showMessageDialog(null,"Witam w zbrojowni");         
     }    
     public String kup_jednostke(String jednostka,int liczba)//wykupywanie jednostek

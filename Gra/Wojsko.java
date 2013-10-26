@@ -2,7 +2,7 @@
 * To change this template, choose Tools | Templates
 * and open the template in the editor.
 */
-package KCK.Gra;
+package Gra;
 /**
 *
 * @author s383988
@@ -20,7 +20,7 @@ public class Wojsko extends Krol
     private int obronap; //sila obrony piechura    
     private int defence; //obrona calej armii
     private int attack; // atak calej armii
- 
+    public Krol krol=new Krol();
     
     
         public int liczebność(){return husarz+kusznik+piechur;}

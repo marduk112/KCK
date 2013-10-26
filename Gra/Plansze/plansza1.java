@@ -2,9 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package KCK.Gra.Plansze;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+package Gra.Plansze;
 /**
  *
  * @author s384080
@@ -13,10 +11,12 @@ public class plansza1 extends plansza_podst
 {
     /*
      * rekrutacja wojska, liczebność, wydawanie poleceń, ulepszenia
-     */
+     */    
     public plansza1()
     {
-        JOptionPane.showMessageDialog(null,"Witam w"); 
+        super("stage1.jpg");
+        //JOptionPane.showMessageDialog(null,"Witam w");
+        
     }
     public int liczebnosc_wojska()
     {
