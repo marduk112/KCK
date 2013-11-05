@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package KCK.Gra.Plansze;
+package Gra.Plansze;
 
-import KCK.Gra.Wojsko;
+import Gra.Wojsko;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

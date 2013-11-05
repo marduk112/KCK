@@ -1,9 +1,9 @@
-package KCK.Gra;
+package Gra;
 
-import KCK.Gra.Plansze.menu;
-import KCK.Gra.Plansze.plansza1;
-import KCK.Gra.Plansze.plansza2;
-import KCK.Gra.Plansze.plansza3;
+import Gra.Plansze.menu;
+import Gra.Plansze.plansza1;
+import Gra.Plansze.plansza2;
+import Gra.Plansze.plansza3;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
