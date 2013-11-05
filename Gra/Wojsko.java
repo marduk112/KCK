@@ -2,7 +2,7 @@
 * To change this template, choose Tools | Templates
 * and open the template in the editor.
 */
-package Gra;
+package KCK.Gra;
 /**
 *
 * @author s383988
@@ -58,13 +58,13 @@ public class Wojsko extends Krol
         public int getAttack() { return attack; }
         //public void setAttack(int i) { attack = i; }
         
-        public void zmien(){                //zmiana calkowitej obrony i ataku po modernizacji
+        private void zmien()
+        {                //zmiana calkowitej obrony i ataku po modernizacji
                 defence=(getHusarz()*getObronah()+getKusznik()*getObronak()+getPiechur()*getObronap());
                 attack=(getHusarz()*getAtakh()+getKusznik()*getAtakk()+getPiechur()*getAtakp());
-        }        
-        
-        public void ulepsz(String jednostka) {                                                //ulepszanie armii
-
+        }           
+        public void ulepsz(String jednostka) 
+        {                                                //ulepszanie armii
                 if("husarz".equals(jednostka))//klikniecie na ulepszenie jednostek husarza + odpowiednie zasoby
                 {                    
                         obronah+=2; //dodanie 2 pkt do obrony
@@ -89,8 +89,8 @@ public class Wojsko extends Krol
                 }
                 zmien();
         }
-
-        public void dodaj(String jednostka,int i){        //dodawanie jednostek
+        public void dodaj(String jednostka,int i)
+        {        //dodawanie jednostek
                 if("husarz".equals(jednostka))//klikniecie na dodanie jednostek husarza + odpowiednie zasoby
                 {
                         husarz+=i; //dodanie i jednostek husarza
@@ -111,6 +111,4 @@ public class Wojsko extends Krol
                 }
                 zmien();
         }
-
-
 }

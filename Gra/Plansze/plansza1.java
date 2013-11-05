@@ -2,7 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gra.Plansze;
+package KCK.Gra.Plansze;
+
 /**
  *
  * @author s384080
@@ -14,9 +15,8 @@ public class plansza1 extends plansza_podst
      */    
     public plansza1()
     {
-        super("stage1.jpg");
-        //JOptionPane.showMessageDialog(null,"Witam w");
-        
+        super("stage1.jpg");        
+        //JOptionPane.showMessageDialog(null,"Witam w pokoju króla");        
     }
     public int liczebnosc_wojska()
     {

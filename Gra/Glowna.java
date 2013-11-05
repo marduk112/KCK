@@ -1,9 +1,8 @@
+package KCK.Gra;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gra;
-
 import java.io.IOException;
 /**
  *
@@ -13,6 +12,6 @@ public class Glowna
 {
     public static void main(String args[]) throws IOException
     {
-        Szkielet szkielet = new Szkielet();
-    }   
+        Szkielet szkielet=new Szkielet();        
+    }
 }

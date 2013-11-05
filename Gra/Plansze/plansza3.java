@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gra.Plansze;
-import javax.swing.JOptionPane;
+package KCK.Gra.Plansze;
 /**
  *
  * @author s384080
@@ -16,6 +15,6 @@ public class plansza3 extends plansza_podst
     public plansza3()
     {
         super("stage3.jpg");
-        JOptionPane.showMessageDialog(null,"Witam w"); 
+        //JOptionPane.showMessageDialog(null,"Witam w"); 
     }
 }

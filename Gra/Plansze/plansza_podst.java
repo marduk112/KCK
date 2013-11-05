@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gra.Plansze;
+package KCK.Gra.Plansze;
 
-import Gra.Wojsko;
+import KCK.Gra.Wojsko;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,21 +21,20 @@ import javax.swing.JPanel;
 public class plansza_podst extends JPanel
 {
     Wojsko wojsko=new Wojsko();
-    BufferedImage image;    
+    BufferedImage image;     
     public plansza_podst(String plansza) 
     {
-        super();          
-        File imageFile = new File("src/Gra/Plansze/images/"+plansza);
-        System.out.println("src/Gra/Plansze/images/"+plansza);
+        super();    
+        File imageFile = new File("src/KCK/Gra/Plansze/images/"+plansza);
         try 
         {
             image = ImageIO.read(imageFile);            
-        } catch (IOException e) {
+        } catch (IOException e) 
+        {
             System.err.println("Blad odczytu obrazka");
         } 
         Dimension dimension = new Dimension(960,692);
-        setPreferredSize(dimension);
-        
+        setPreferredSize(dimension);        
     } 
     @Override
     public void paintComponent(Graphics g) 

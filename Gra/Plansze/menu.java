@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gra.Plansze;
+package KCK.Gra.Plansze;
 
 /**
  *
@@ -12,6 +12,6 @@ public class menu extends plansza_podst
 {
     public menu()
     {
-        super("menu.jpg");
-    }   
+        super("menu.jpg");        
+    }       
 }
