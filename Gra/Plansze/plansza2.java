@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package Gra.Plansze;
-import javax.swing.JOptionPane;
+import java.io.IOException;
 /**
  *
  * @author s384080
@@ -14,7 +14,7 @@ public class plansza2 extends plansza_podst
      * skarbiec, statystyki walk, polecenia z tym związane
      */
     
-    public plansza2()
+    public plansza2() throws IOException
     {
         super("stage2.jpg");        
         //JOptionPane.showMessageDialog(null,"Witam w zbrojowni");         
@@ -32,8 +32,7 @@ public class plansza2 extends plansza_podst
             case "wytrenuj piechura":
                 wojsko.addPiechur(liczba);
                 return "Wytrenowano Piechura";
-            default:
-                JOptionPane.showMessageDialog(null, "Źle wybrałeś");
+            default:                
                 return "Błąd";
         }
     }

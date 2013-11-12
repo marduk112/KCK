@@ -14,10 +14,10 @@ public class Krol
      * zczytanie miejsca krola, zasoby, wydawanie poleceń wojsku
      */
            
-        private int kamien; // liczba kamieni w zasobach
-        private int diament; // liczba diamentow w zasobach
-        private int drewno; // liczba drewna w zasobach
-        private int zloto; //liczba zlota        
+        private static int kamien; // liczba kamieni w zasobach
+        private static int diament; // liczba diamentow w zasobach
+        private static int drewno; // liczba drewna w zasobach
+        private static int zloto; //liczba zlota        
         public int getKamien() { return kamien; } //funkcja przyjmujaca liczbe kamienia
         //public void setKamien(int i) { kamien = i; } //zapisywanie liczby kamienia
         public void addKamien(int i) { kamien += i; } //dodawanie/odejmowanie liczby kamieni

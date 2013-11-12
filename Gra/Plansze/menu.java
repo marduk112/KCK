@@ -4,13 +4,15 @@
  */
 package Gra.Plansze;
 
+import java.io.IOException;
+
 /**
  *
  * @author s384080
  */
 public class menu extends plansza_podst
 {
-    public menu()
+    public menu() throws IOException
     {
         super("menu.jpg");        
     }       

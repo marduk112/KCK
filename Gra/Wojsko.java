@@ -9,18 +9,18 @@ package Gra;
 */
 public class Wojsko extends Krol
 {
-    private int husarz; //liczba husarzy w wojsku
-    private int kusznik; //liczba kusznikow w wojsku
-    private int piechur; //liczba piechurów
-    private int atakh; //siła ataku husarza
-    private int obronah; // sila obrony husarza
-    private int atakk; //sila ataku kusznika
-    private int obronak; // sila obrony kusznika
-    private int atakp; //sila ataku piechura
-    private int obronap; //sila obrony piechura    
-    private int defence; //obrona calej armii
-    private int attack; // atak calej armii
-    public Krol krol=new Krol();
+    private static int husarz; //liczba husarzy w wojsku
+    private static int kusznik; //liczba kusznikow w wojsku
+    private static int piechur; //liczba piechurów
+    private static int atakh; //siła ataku husarza
+    private static int obronah; // sila obrony husarza
+    private static int atakk; //sila ataku kusznika
+    private static int obronak; // sila obrony kusznika
+    private static int atakp; //sila ataku piechura
+    private static int obronap; //sila obrony piechura    
+    private static int defence; //obrona calej armii
+    private static int attack; // atak calej armii
+    //public Krol krol=new Krol();
     
     
         public int liczebność(){return husarz+kusznik+piechur;}
@@ -69,23 +69,23 @@ public class Wojsko extends Krol
                 {                    
                         obronah+=2; //dodanie 2 pkt do obrony
                         atakh+=2;                //dodanie 2 pkt do ataku
-                        krol.addZloto(100); // zasoby zlota -100
-                        krol.addDiament(-5); //zasoby diamentu -5
+                        addZloto(100); // zasoby zlota -100
+                        addDiament(-5); //zasoby diamentu -5
                         
                 }
                 if("kusznik".equals(jednostka))//klikniecie na ulepszenie jednostek kusznika + odpowiednie zasoby
                 {
                         obronak+=2;
                         atakk+=3;
-                        krol.addZloto(-80);
-                        krol.addKamien(-3);
+                        addZloto(-80);
+                        addKamien(-3);
                 }
                 if("piechur".equals(jednostka))//klikniecie na ulepszenie jednostek piechura + odpowiednie zasoby
                 {
                         obronap+=3;
                         atakp+=2;
-                        krol.addZloto(-50);
-                        krol.addDrewno(-5);
+                        addZloto(-50);
+                        addDrewno(-5);
                 }
                 zmien();
         }
@@ -94,20 +94,20 @@ public class Wojsko extends Krol
                 if("husarz".equals(jednostka))//klikniecie na dodanie jednostek husarza + odpowiednie zasoby
                 {
                         husarz+=i; //dodanie i jednostek husarza
-                        krol.addZloto(-200*i); // zasoby zlota -200 za kazdego husarza
-                        krol.addDiament(-10*i); //zasoby diamentu -10 za kazdego husarza
+                        addZloto(-200*i); // zasoby zlota -200 za kazdego husarza
+                        addDiament(-10*i); //zasoby diamentu -10 za kazdego husarza
                 }
                 if("kusznik".equals(jednostka))//klikniecie na dodanie jednostek kusznika + odpowiednie zasoby
                 {
                         kusznik+=i;
-                        krol.addZloto(-140*i);
-                        krol.addKamien(-7*i);
+                        addZloto(-140*i);
+                        addKamien(-7*i);
                 }
                 if("piechur".equals(jednostka))//klikniecie na dodanie jednostek piechura + odpowiednie zasoby
                 {
                         piechur+=i;
-                        krol.addZloto(-90*i);
-                        krol.addDrewno(-10*i);
+                        addZloto(-90*i);
+                        addDrewno(-10*i);
                 }
                 zmien();
         }

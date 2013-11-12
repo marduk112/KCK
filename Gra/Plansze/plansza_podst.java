@@ -21,10 +21,10 @@ import javax.swing.JPanel;
 public class plansza_podst extends JPanel
 {
     Wojsko wojsko=new Wojsko();
-    BufferedImage image;     
-    public plansza_podst(String plansza) 
+    BufferedImage image;
+    public plansza_podst(String plansza) throws IOException 
     {
-        super();    
+        super();        
         File imageFile = new File("src/KCK/Gra/Plansze/images/"+plansza);
         try 
         {
@@ -33,7 +33,7 @@ public class plansza_podst extends JPanel
         {
             System.err.println("Blad odczytu obrazka");
         } 
-        Dimension dimension = new Dimension(960,692);
+        Dimension dimension = new Dimension(962,692);
         setPreferredSize(dimension);        
     } 
     @Override
