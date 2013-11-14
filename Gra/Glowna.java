@@ -11,9 +11,7 @@ import java.util.logging.Logger;
  * @author s384080
  */
 public class Glowna 
-{
-    private static String wybor="3 pietro";
-    private static Szkielet szkielet;
+{   
     public static void main(String args[]) throws IOException
     {
         try 
@@ -37,26 +35,12 @@ public class Glowna
             {
                 try 
                 {
-                    szkielet=new Szkielet();
+                    new Szkielet();                    
                 } catch (IOException ex) 
                 {
                     Logger.getLogger(Glowna.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });   
-        while (true)
-        {            
-            switch (wybor)
-            {
-                case "1 pietro":
-                    break;
-                case "2 pietro":
-                    break;
-                case "3 pietro":
-                    break;
-                default:
-                    szkielet.wypiszInfo.append("Źle wpisales polecenie");
-            }
-        }
+        });        
     }    
 }

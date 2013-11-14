@@ -19,11 +19,7 @@ public class plansza1 extends plansza_podst
     {
         super("stage1.jpg");        
         //JOptionPane.showMessageDialog(null,"Witam w pokoju króla");        
-    }
-    public int liczebnosc_wojska()
-    {
-        return wojsko.liczebność();
-    }    
+    }      
     public String Zasoby()
     {
         return "Liczba kamienia = "+wojsko.getKamien()+"\n"+"Liczba diamentu = "+wojsko.getDiament()+"\n"+"Liczba drewna = "+wojsko.getDrewno()+"\n"+"Liczba złota = "+wojsko.getZloto();

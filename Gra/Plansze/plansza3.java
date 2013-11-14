@@ -28,6 +28,6 @@ public class plansza3 extends plansza_podst
     }
     public String wyswietlstatystyki()
     {
-        return "Liczba jednostek";
+        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+wojsko.getHusarz()+"\nLiczba łuczników: "+wojsko.getKusznik()+"\nLiczba piechurów: "+wojsko.getPiechur()+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
     }
 }
