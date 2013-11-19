@@ -16,8 +16,7 @@ public class plansza2 extends plansza_podst
     
     public plansza2() throws IOException
     {
-        super("stage2.jpg");        
-        //JOptionPane.showMessageDialog(null,"Witam w zbrojowni");         
+        super("stage2.jpg");         
     }    
     public String kup_jednostke(String jednostka,int liczba)//wykupywanie jednostek
     {
@@ -25,20 +24,24 @@ public class plansza2 extends plansza_podst
         {
             case "wytrenuj husarza":
                 wojsko.addHusarz(liczba);
-                return "Wytrenowano Husarza";
+                return "Wytrenowano "+liczba+" Husarza/y";
             case "wytrenuj kusznika":
                 wojsko.addKusznik(liczba);                
-                return "Wytrenowano Kusznika";
+                return "Wytrenowano "+liczba+" Kusznika/ów";
             case "wytrenuj piechura":
                 wojsko.addPiechur(liczba);
-                return "Wytrenowano Piechura";
+                return "Wytrenowano "+liczba+" Piechura/ów";
             default:                
                 return "Błąd";
         }
     }
-    public String ulepszenia(String ulepszenie,String jednostka)
+    public String ulepszenia(String jednostka)
     {
         wojsko.ulepsz(jednostka);
-        return "Ulepszono "+ulepszenie+" "+jednostka;
+        return "Ulepszono "+jednostka;
+    }
+    public String Liczebnosc_Wojska()
+    {
+        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+wojsko.getHusarz()+"\nLiczba łuczników: "+wojsko.getKusznik()+"\nLiczba piechurów: "+wojsko.getPiechur()+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
     }
 }
