@@ -9,9 +9,9 @@ package Gra;
 */
 public class Wojsko extends Krol
 {
-    private int husarz; //liczba husarzy w wojsku
-    private int kusznik; //liczba kusznikow w wojsku
-    private int piechur; //liczba piechurów
+    private int husarz=0; //liczba husarzy w wojsku
+    private int kusznik=0; //liczba kusznikow w wojsku
+    private int piechur=0; //liczba piechurów
     private int atakh=10; //siła ataku husarza
     private int obronah=10; // sila obrony husarza
     private int atakk=8; //sila ataku kusznika
@@ -93,19 +93,19 @@ public class Wojsko extends Krol
         }
         public void dodaj(String jednostka,int i)
         {        //dodawanie jednostek
-                if("husarz".equals(jednostka))//klikniecie na dodanie jednostek husarza + odpowiednie zasoby
+                if("husarz".equals(jednostka) && getZloto()>=200*i && getDiament()>=10*i)//klikniecie na dodanie jednostek husarza + odpowiednie zasoby
                 {
                         husarz+=i; //dodanie i jednostek husarza
                         addZloto(-200*i); // zasoby zlota -200 za kazdego husarza
                         addDiament(-10*i); //zasoby diamentu -10 za kazdego husarza
                 }
-                if("kusznik".equals(jednostka))//klikniecie na dodanie jednostek kusznika + odpowiednie zasoby
+                if("kusznik".equals(jednostka) && getZloto()>=140*i && getKamien()>=7*i)//klikniecie na dodanie jednostek kusznika + odpowiednie zasoby
                 {
                         kusznik+=i;
                         addZloto(-140*i);
                         addKamien(-7*i);
                 }
-                if("piechur".equals(jednostka))//klikniecie na dodanie jednostek piechura + odpowiednie zasoby
+                if("piechur".equals(jednostka) && getZloto()>=90*i && getDrewno()>=10*i)//klikniecie na dodanie jednostek piechura + odpowiednie zasoby
                 {
                         piechur+=i;
                         addZloto(-90*i);

@@ -19,21 +19,22 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.Document;
 import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 public class Szkielet extends JFrame implements MouseListener, MouseMotionListener
 {        
-    private SAXBuilder builder = new SAXBuilder();
-    private File xmlFile = new File("src/gwiazdy.xml");
-    private Document document;
+    //private SAXBuilder builder = new SAXBuilder();
+    //private File xmlFile = new File("src/gwiazdy.xml");
+    //private Document document;
     private plansza_podst plansza;  
     private static String wybor;           	
     private final File icon = new File("src/KCK/Gra/Plansze/images/menu.jpg");
     private final BufferedImage image;
     private final JTextArea wypiszInfo = new JTextArea("Tu będą wypisywane efekty rozkazów\n\n");
-    private final JTextField komendy = new JTextField("Tu wpisujemy polecenia"); 
-    private final JScrollPane scrollPane = new JScrollPane(wypiszInfo);    
+    private final JTextField komendy = new JTextField(); 
+    private final JScrollPane scrollPane = new JScrollPane(wypiszInfo); 
+    private plansza1 plansza1 = new plansza1();
+    private plansza2 plansza2 = new plansza2();
+    private plansza3 plansza3 = new plansza3();
     private void Interfejs()
     {         
         scrollPane.setViewportView(wypiszInfo);
@@ -76,11 +77,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     {         
         if (!"".equals(komendy.getText()) && komendy.getText()!=null && !"\n".equals(komendy.getText()))
         {
-            plansza1 plansza1 = new plansza1();
-            plansza2 plansza2 = new plansza2();
-            plansza3 plansza3 = new plansza3();
+            
             System.out.println(komendy.getText()+" "+plansza.getClass().toString());//funkcja kontrolna
-            wybor=komendy.getText().toLowerCase();       
+            wybor=komendy.getText().toLowerCase().trim();       
             if (plansza.getClass().toString().contains("plansza3"))//komendy dla 3 piętra  
             {
                 switch(wybor)
@@ -98,7 +97,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                         break;                     
                     case "walcz":
                         wypiszInfo.append(plansza3.Walka()+"\n");
-                        break;
+                        break;                    
                     case "wyjdź z gry":
                         System.exit(0); 
                         break;
@@ -108,35 +107,60 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             }
             else if(plansza.getClass().toString().contains("plansza2"))//komendy dla 2 piętra
             {
-                switch(wybor)
-                {
-                    case "przejdź do 1 piętra":
+                //switch(wybor)
+                //{może tak będzie wyglądać jak nie będzie xml-a
+                    if(wybor.contains("przejdź do 1 piętra"))
+                    {
                         zmiana_planszy("plansza1");
-                        wypiszInfo.append("Przeszedłeś na 1 piętro\n");
-                        break;
-                    case "przejdź do 2 piętra":
+                        wypiszInfo.append("Przeszedłeś na 1 piętro\n");                        
+                    }
+                    else if(wybor.contains("przejdź do 2 piętra"))
+                    {
                         wypiszInfo.append("Już jesteś na 2 piętrze\n");
-                        break;
-                    case "przejdź do 3 piętra":
+                    }
+                    else if(wybor.contains("przejdź do 3 piętra"))
+                    {
                         zmiana_planszy("plansza3");
                         wypiszInfo.append("Przeszedłeś na 3 piętro\n");
-                        break;         
-                    case "liczba żołnierzy":
+                    }         
+                    else if(wybor.contains("liczba żołnierzy"))
+                    {
                         wypiszInfo.append(plansza2.Liczebnosc_Wojska()+"\n");
-                    case "ulepsz":
-                        if (wybor.contains("piechura"))
-                            wypiszInfo.append(plansza2.ulepszenia("piechur")+"\n");
-                        if (wybor.contains("kusznika"))
-                            wypiszInfo.append(plansza2.ulepszenia("kusznik")+"\n");
-                        if (wybor.contains("husarza"))
-                            wypiszInfo.append(plansza2.ulepszenia("husarz")+"\n");
-                        break;
-                    case "wyjdź z gry":
+                    }
+                    //case "wytrenuj husarza"
+                    else if(wybor.contains("wytrenuj piechura"))//ulepsz
+                    {
+                        wypiszInfo.append(plansza2.ulepszenia("piechur")+"\n");
+                    }
+                    else if (wybor.contains("wytrenuj kusznika"))//ulepsz
+                        wypiszInfo.append(plansza2.ulepszenia("kusznik")+"\n");
+                    else if (wybor.contains("wytrenuj husarza"))//ulepsz
+                        wypiszInfo.append(plansza2.ulepszenia("husarz")+"\n");                        
+                    else if(wybor.contains("dodaj") && (wybor.contains("piechura") || wybor.contains("piechurów") || wybor.contains("piechurow")))
+                    { 
+                        Kup_Jednostke("wytrenuj piechura");                        
+                    }
+                    else if(wybor.contains("dodaj") && (wybor.contains("kusznika") || wybor.contains("kuszników") || wybor.contains("kusznikow")))
+                    {                        
+                        Kup_Jednostke("wytrenuj kusznika");
+                    }
+                    else if(wybor.contains("dodaj") && (wybor.contains("husarza") || wybor.contains("husarzy")))
+                    {
+                        Kup_Jednostke("wytrenuj husarza");                       
+                    }
+                    else if(wybor.contains("wyjdź z gry"))
+                    {
                         System.exit(0); 
-                        break;
-                    default:
+                    }
+                    else if(wybor.contains("wyświetl parametry swojej armii"))
+                        wypiszInfo.append("Atak Armii: "+Integer.toString(plansza2.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza2.Wyswietlenie_Obrony_Armii())+"\n");
+                    else
                         wypiszInfo.append("Źle wprowadziles polecenie\n");
-                }
+                //}                
+               /* if (wybor.contains("wytrenuj piechura"))
+                {
+                    plansza2.kup_jednostke("wytrenuj piechura", wybor.);
+                }*/
             }
             else if (plansza.getClass().toString().contains("plansza1"))//komendy dla 1 piętra
             {
@@ -167,10 +191,17 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 }
             }
             else
-                wypiszInfo.append("Źle wprowadziles polecenie\n");
-            komendy.setText("");
-        }        
+                wypiszInfo.append("Źle wprowadziles polecenie\n");            
+        }    
+        komendy.setText("");
     }    
+    private void Kup_Jednostke(String jednostka)
+    {
+        if(Character.isDigit(wybor.charAt(6)) && Character.isDigit(wybor.charAt(7)))
+            wypiszInfo.append(plansza2.kup_jednostke(jednostka,Integer.parseInt(Character.toString(wybor.charAt(6)))*10+Integer.parseInt(Character.toString(wybor.charAt(7))))+"\n");                            
+        else if (Character.isDigit(wybor.charAt(6)))
+            wypiszInfo.append(plansza2.kup_jednostke(jednostka,Integer.parseInt(Character.toString(wybor.charAt(9))))+"\n");
+    }
     /*public Szkielet(Element node) 
     {
         
@@ -195,7 +226,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     public Szkielet() throws IOException, JDOMException 
     {        
         super("Gra Zamek");  
-        this.image = ImageIO.read(icon);
+        image = ImageIO.read(icon);
+        komendy.setText("Tu wpisujemy polecenia");
         /*this.document = (Document) builder.build(xmlFile);
         Element rootNode = document.getRootElement();
         //setResizable(false);
@@ -236,8 +268,14 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 {
                     Logger.getLogger(Szkielet.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }            
+        });  
+        komendy.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                komendyMouseClicked(evt);
             }
-        });        
+        });
     }
     /*
      * zmiana planszy gry
@@ -273,6 +311,10 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         }     
         Interfejs();        
     }    
+    public void komendyMouseClicked(java.awt.event.MouseEvent evt) 
+    {  
+        komendy.setText("");
+    }
     @Override
     public void mouseClicked(MouseEvent e) {}
     @Override
