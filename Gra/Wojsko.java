@@ -67,22 +67,22 @@ public class Wojsko extends Krol
         }           
         public void ulepsz(String jednostka) 
         {                                                //ulepszanie armii
-                if("husarz".equals(jednostka))//klikniecie na ulepszenie jednostek husarza + odpowiednie zasoby
+                if("husarz".equals(jednostka)  && getZloto()>=100 && getDiament()>=5)//klikniecie na ulepszenie jednostek husarza + odpowiednie zasoby
                 {                    
                         obronah+=2; //dodanie 2 pkt do obrony
                         atakh+=2;                //dodanie 2 pkt do ataku
-                        addZloto(100); // zasoby zlota -100
+                        addZloto(-100); // zasoby zlota -100
                         addDiament(-5); //zasoby diamentu -5
                         
                 }
-                if("kusznik".equals(jednostka))//klikniecie na ulepszenie jednostek kusznika + odpowiednie zasoby
+                if("kusznik".equals(jednostka) && getZloto()>=80 && getKamien()>=3)//klikniecie na ulepszenie jednostek kusznika + odpowiednie zasoby
                 {
                         obronak+=2;
                         atakk+=3;
                         addZloto(-80);
                         addKamien(-3);
                 }
-                if("piechur".equals(jednostka))//klikniecie na ulepszenie jednostek piechura + odpowiednie zasoby
+                if("piechur".equals(jednostka) && getZloto()>=50 && getDrewno()>=5)//klikniecie na ulepszenie jednostek piechura + odpowiednie zasoby
                 {
                         obronap+=3;
                         atakp+=2;

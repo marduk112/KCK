@@ -26,13 +26,13 @@ public class plansza2 extends plansza_podst
             {
                 case "wytrenuj husarza":
                     wojsko.addHusarz(liczba);
-                    return "Wytrenowano "+liczba+" Husarza/y";
+                    return "Dodano "+liczba+" Husarza/y";
                 case "wytrenuj kusznika":
                     wojsko.addKusznik(liczba);                
-                    return "Wytrenowano "+liczba+" Kusznika/ów";
+                    return "Dodano "+liczba+" Kusznika/ów";
                 case "wytrenuj piechura":
                     wojsko.addPiechur(liczba);
-                    return "Wytrenowano "+liczba+" Piechura/ów";
+                    return "Dodano "+liczba+" Piechura/ów";
                 default:                
                     return "Błąd";
             }

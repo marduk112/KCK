@@ -29,6 +29,14 @@ public class plansza_podst extends JPanel
     public plansza_podst(String plansza) throws IOException 
     {
         super();        
+        wrog.addDrewno(999999999);
+        wrog.addKamien(999999999);
+        wrog.addDiament(999999999);
+        wrog.addZloto(999999999);
+        wojsko.addZloto(2000);
+        wojsko.addDrewno(50);
+        wojsko.addKamien(40);
+        wojsko.addDiament(3);
         File imageFile = new File("src/KCK/Gra/Plansze/images/"+plansza);
         try 
         {

@@ -195,6 +195,9 @@ public class plansza3 extends plansza_podst
                 }
             }
         }
+        wojsko.addKamien(zwroc);
+        wojsko.addZloto(zwroc);
+        wojsko.addDiament(zwroc);
         return "Utraciłeś "+zwroc+" jednostek";
     }
     /*
@@ -202,6 +205,9 @@ public class plansza3 extends plansza_podst
     */
     public String Walka()
     {
+        wrog.addPiechur(6);
+        wrog.addKusznik(3);
+        wrog.addHusarz(2);
         if (wojsko.getDefence()>wrog.getDefence() && wrog.getDefence()*1.7 < wojsko.getDefence() && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
             return Utrata_Jednostek((float)0.1);
         if (wojsko.getDefence()>wrog.getDefence() && (wrog.getDefence()*1.5 < wojsko.getDefence() && wojsko.getDefence() <= wrog.getDefence()*1.7) && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)

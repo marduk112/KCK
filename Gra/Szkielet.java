@@ -154,6 +154,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     }
                     else if(wybor.contains("wyświetl parametry swojej armii"))
                         wypiszInfo.append("Atak Armii: "+Integer.toString(plansza2.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza2.Wyswietlenie_Obrony_Armii())+"\n");
+                    else if(wybor.contains("wyświetl parametry armii wroga"))
+                        wypiszInfo.append("Atak Armii: "+Integer.toString(plansza2.Wyswietlenie_Ataku_Wroga())+"\nObrona Armii: "+Integer.toString(plansza2.Wyswietlenie_Obrony_Wroga())+"\n");
                     else
                         wypiszInfo.append("Źle wprowadziles polecenie\n");
                 //}                
