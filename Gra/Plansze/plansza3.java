@@ -27,6 +27,9 @@ public class plansza3 extends plansza_podst
     {        
         int pomoc=(int)(wojsko.Liczba_Jednostek()*procent);
         int zwroc=pomoc;
+        int wrog_liczba_husarzy=wrog.getHusarz();
+        int wrog_liczba_piechurow=wrog.getPiechur();
+        int wrog_liczba_kusznicy=wrog.getKusznik();
         if (wojsko.getObronah()<wojsko.getObronak())
         {
             if (wojsko.getObronah()<wojsko.getObronap())
@@ -195,9 +198,10 @@ public class plansza3 extends plansza_podst
                 }
             }
         }
-        wojsko.addKamien(zwroc);
-        wojsko.addZloto(zwroc);
-        wojsko.addDiament(zwroc);
+        wojsko.addDrewno(wrog.getPiechur()*7);
+        wojsko.addKamien(wrog.getKusznik()*5);
+        wojsko.addZloto(wrog.getPiechur()*3+wrog.getKusznik()*3+wrog.getHusarz()*2);
+        wojsko.addDiament(wrog.getHusarz()*3);        
         return "Utraciłeś "+zwroc+" jednostek";
     }
     /*
@@ -205,9 +209,9 @@ public class plansza3 extends plansza_podst
     */
     public String Walka()
     {
-        wrog.addPiechur(6);
+        wrog.addPiechur(4);
         wrog.addKusznik(3);
-        wrog.addHusarz(2);
+        wrog.addHusarz(2);        
         if (wojsko.getDefence()>wrog.getDefence() && wrog.getDefence()*1.7 < wojsko.getDefence() && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
             return Utrata_Jednostek((float)0.1);
         if (wojsko.getDefence()>wrog.getDefence() && (wrog.getDefence()*1.5 < wojsko.getDefence() && wojsko.getDefence() <= wrog.getDefence()*1.7) && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
@@ -248,5 +252,30 @@ public class plansza3 extends plansza_podst
             wojsko.addHusarz(-wojsko.getHusarz());
             return "Utraciłeś wszystkie jednostki";
         }        
-    }    
+    }
+    public String Liczebnosc_Wojska_Wroga()
+    {
+        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+(wrog.getHusarz()+2)+"\nLiczba kuszników: "+(wrog.getKusznik()+3)+"\nLiczba piechurów: "+(wrog.getPiechur()+4)+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
+    }
+    public String Liczebnosc_Wojska()
+    {
+        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+wojsko.getHusarz()+"\nLiczba kuszników: "+wojsko.getKusznik()+"\nLiczba piechurów: "+wojsko.getPiechur()+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
+    }
+    //nie wiem do jakiego dokładnie piętra dać poniższe metody, obrona to suma punktów obrony wszystkich jednostek, atak analogicznie
+    public int Wyswietlenie_Obrony_Armii()
+    {
+        return wojsko.getDefence();
+    }
+    public int Wyswietlenie_Ataku_Armii()
+    {
+        return wojsko.getAttack();
+    }
+    public int Wyswietlenie_Ataku_Wroga()
+    {
+        return wojsko.getAttack();
+    }
+    public int Wyswietlenie_Obrony_Wroga()
+    {
+        return wojsko.getDefence();
+    }
 }

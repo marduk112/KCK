@@ -22,22 +22,22 @@ public class plansza_podst extends JPanel
 {
     static Wojsko wojsko=new Wojsko();
     static Wojsko wrog=new Wojsko();    
-    BufferedImage image;
+    BufferedImage image;    
     /*
     * Ładowanie planszy
     */
     public plansza_podst(String plansza) throws IOException 
     {
         super();        
-        wrog.addDrewno(999999999);
-        wrog.addKamien(999999999);
-        wrog.addDiament(999999999);
-        wrog.addZloto(999999999);
-        wojsko.addZloto(2000);
-        wojsko.addDrewno(50);
-        wojsko.addKamien(40);
-        wojsko.addDiament(3);
-        File imageFile = new File("src/KCK/Gra/Plansze/images/"+plansza);
+        if (wrog.getDrewno()<2147483647)
+            wrog.addDrewno(999);
+        if (wrog.getKamien()<2147483647)
+            wrog.addKamien(999);
+        if (wrog.getDiament()<2147483647)
+            wrog.addDiament(999);
+        if (wrog.getZloto()<2147483647)
+            wrog.addZloto(999);        
+        File imageFile = new File("src/Gra/Plansze/images/"+plansza);
         try 
         {
             image = ImageIO.read(imageFile);            
@@ -53,5 +53,9 @@ public class plansza_podst extends JPanel
     {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(image, 0, 0, this);
-    }
+    }    
+    public Wojsko Armia_Zasoby()
+    {
+        return wojsko;
+    }    
 }

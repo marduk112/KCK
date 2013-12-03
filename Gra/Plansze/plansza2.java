@@ -47,30 +47,5 @@ public class plansza2 extends plansza_podst
         wojsko.ulepsz(jednostka);
         return "Ulepszono "+jednostka;
     }
-    // suma wszystkich swoich jednostek
-    public String Liczebnosc_Wojska_Wroga()
-    {
-        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+wrog.getHusarz()+"\nLiczba kuszników: "+wrog.getKusznik()+"\nLiczba piechurów: "+wrog.getPiechur()+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
-    }
-    public String Liczebnosc_Wojska()
-    {
-        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+wojsko.getHusarz()+"\nLiczba kuszników: "+wojsko.getKusznik()+"\nLiczba piechurów: "+wojsko.getPiechur()+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
-    }
-    //nie wiem do jakiego dokładnie piętra dać poniższe metody, obrona to suma punktów obrony wszystkich jednostek, atak analogicznie
-    public int Wyswietlenie_Obrony_Armii()
-    {
-        return wojsko.getDefence();
-    }
-    public int Wyswietlenie_Ataku_Armii()
-    {
-        return wojsko.getAttack();
-    }
-    public int Wyswietlenie_Ataku_Wroga()
-    {
-        return wojsko.getAttack();
-    }
-    public int Wyswietlenie_Obrony_Wroga()
-    {
-        return wojsko.getDefence();
-    }
+    // suma wszystkich swoich jednostek    
 }
