@@ -37,7 +37,7 @@ public class plansza_podst extends JPanel
             wrog.addDiament(999);
         if (wrog.getZloto()<2147483647)
             wrog.addZloto(999);        
-        File imageFile = new File("src/KCK/Gra/Plansze/images/"+plansza);
+        File imageFile = new File("src/Gra/Plansze/images/"+plansza);
         try 
         {
             image = ImageIO.read(imageFile);            
