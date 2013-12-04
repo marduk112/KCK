@@ -35,8 +35,8 @@ public class Glowna
             public void run() 
             {
                 try 
-                {
-                    new Szkielet();                    
+                {                
+                    new Szkielet();
                 } catch (IOException | JDOMException ex) 
                 {
                     Logger.getLogger(Glowna.class.getName()).log(Level.SEVERE, null, ex);

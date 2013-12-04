@@ -50,6 +50,13 @@ misje[0]+"\n");
     private int dzien=1;    
     private int dzien_misja_1=0;
     private boolean zdarzenie_losowe_wiesniacy=false;
+    private boolean tworzenie_piechurow=false;
+    private boolean tworzenie_kusznikow=false;
+    private boolean tworzenie_husarzy=false;
+    private int liczba_jednostek;
+    private boolean malo_kamien=false;
+    private boolean malo_drewno=false;
+    private boolean malo_diament=false;
     private void Interfejs()
     {         
         scrollPane.setViewportView(wypiszInfo);
@@ -91,26 +98,16 @@ misje[0]+"\n");
     private void komendyActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException, IOException
     {         
         wybor=komendy.getText().toLowerCase().trim();
-        //komendy wspólne            
-        if (wybor.contains("tak") || wybor.contains("przyjmuję"))//tu będą przyjmowane misje
-        {      
-            if (misja!=-1)
-            {
-                aktualne.add(misja);
-                misja=-1;
-            }
-            else            
-                wypiszInfo.append("Nie wybrałeś żadnej misji\n");            
-        }    
-        else if (plansza.Armia_Zasoby().getZloto()<60)
+        //komendy wspólne       
+        if (plansza.Armia_Zasoby().getZloto()<60)
         {
             wypiszInfo.append("- Królu! Brakuje nam złota w skarbcu, wyślij armię do pobliskiej wioski, aby zebrali podatki.\n");            
             aktualne.add(1);
         }        
-        else if (plansza.Armia_Zasoby().getKamien()<20)
+        //if (plansza.Armia_Zasoby().getKamien()<20)
         {
-            wypiszInfo.append("Uwaga, zauważyłem, że masz mało kamienia, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
-            if (wybor.contains("diament"))
+            //wypiszInfo.append("Uwaga, zauważyłem, że masz mało kamienia, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
+            /*if (wybor.contains("diament"))
             {
                 if (plansza.Armia_Zasoby().getPiechur()>=1)
                 {
@@ -139,14 +136,12 @@ misje[0]+"\n");
                 }
                 else
                     wypiszInfo.append("Masz za mało piechurów\n");
-            }
-            else
-                wypiszInfo.append("Źle wprowadziles polecenie\n");
+            }*/           
         }
-        else if (plansza.Armia_Zasoby().getDrewno()<20)
+        //if (plansza.Armia_Zasoby().getDrewno()<20)
         {
-            wypiszInfo.append("Uwaga, zauważyłem, że masz mało drewna, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
-            if (wybor.contains("diament"))
+            //wypiszInfo.append("Uwaga, zauważyłem, że masz mało drewna, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
+            /*if (wybor.contains("diament"))
             {
                 if (plansza.Armia_Zasoby().getPiechur()>=1)
                 {
@@ -175,14 +170,12 @@ misje[0]+"\n");
                 }
                 else
                     wypiszInfo.append("Masz za mało piechurów\n");
-            }
-            else
-                wypiszInfo.append("Źle wprowadziles polecenie\n");
+            }*/            
         }
-        else if (plansza.Armia_Zasoby().getDiament()<20)
+        //if (plansza.Armia_Zasoby().getDiament()<2)
         {
-            wypiszInfo.append("Uwaga, zauważyłem, że masz mało diamentów, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
-            if (wybor.contains("kamień") || wybor.contains("kamien"))
+            //wypiszInfo.append("Uwaga, zauważyłem, że masz mało diamentów, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
+            /*if (wybor.contains("kamień") || wybor.contains("kamien"))
             {
                 if (plansza.Armia_Zasoby().getPiechur()>=1)
                 {
@@ -211,10 +204,64 @@ misje[0]+"\n");
                 }
                 else
                     wypiszInfo.append("Masz za mało piechurów\n");
-            }
-            else
-                wypiszInfo.append("Źle wprowadziles polecenie\n");
+            }*/
         }
+        Random generator = new Random();        
+        if (generator.nextInt(100)==1)//generator 1% szansy na zdarzenie
+        {
+            wypiszInfo.append("- Twoi poddani są niezadowoleni, żyją bardzo ubogo. Rozdaj wieśniakom 200 sztuk złota, aby poprawić swój autorytet.\n");
+            zdarzenie_losowe_wiesniacy=true;
+        }
+        if (wybor.contains("tak") || wybor.contains("przyjmuję"))//tu będą przyjmowane misje,zdarzenia
+        {      
+            System.out.println("mi");
+            if (malo_kamien==true)
+            {
+                plansza.Armia_Zasoby().dodaj("piechur", -1);
+                plansza.Armia_Zasoby().addKamien(50);
+                malo_kamien=false;
+                wypiszInfo.append("Zdobyto 50 sztuk kamienia\n");
+            }
+            else if (malo_drewno==true)
+            {
+                plansza.Armia_Zasoby().dodaj("piechur", -1);
+                plansza.Armia_Zasoby().addDrewno(50);
+                malo_drewno=false;
+                wypiszInfo.append("Zdobyto 50 sztuk drewna\n");
+            }
+            else if (malo_diament==true)
+            {
+                plansza.Armia_Zasoby().dodaj("piechur", -1);
+                plansza.Armia_Zasoby().addDiament(50);
+                malo_diament=false;
+                wypiszInfo.append("Zdobyto 50 sztuk diamentów\n");
+            }
+            else if (tworzenie_piechurow==true)
+            {
+                plansza2.kup_jednostke("wytrenuj piechura", liczba_jednostek);
+                wypiszInfo.append("Stworzyłeś "+liczba_jednostek+" piechura/ów\n");
+                tworzenie_piechurow=false;
+            }
+            else if (tworzenie_kusznikow==true)
+            {
+                plansza2.kup_jednostke("wytrenuj kusznika", liczba_jednostek);
+                wypiszInfo.append("Stworzyłeś "+liczba_jednostek+" kusznika/ów\n");
+                tworzenie_kusznikow=false;
+            }
+            else if (tworzenie_husarzy==true)
+            {
+                plansza2.kup_jednostke("wytrenuj husarza", liczba_jednostek);
+                wypiszInfo.append("Stworzyłeś "+liczba_jednostek+" husarza/y\n");
+                tworzenie_husarzy=false;
+            }
+            else if (misja!=-1)
+            {
+                aktualne.add(misja);
+                misja=-1;
+            }
+            else            
+                wypiszInfo.append("Nie wybrałeś żadnej misji\n");            
+        } 
         else if (wybor.contains("wybieram") && (wybor.contains("misje") || wybor.contains("misję")) || wybor.contains("nr") || wybor.contains("numer"))
         {
             //wypiszInfo.append("Na pewno?\n");              
@@ -246,121 +293,86 @@ misje[0]+"\n");
             wypiszInfo.append("Rozpoczyna się "+Integer.toString(Nastepny_Dzien())+" dzień\n");        
         else if (wybor.contains("który") && wybor.contains("jest") && wybor.contains("dzień") || wybor.contains("dziś"))
             wypiszInfo.append("Dziś jest dzień "+Wyswietl_Dzien()+"\n"); 
-        else if (wybor.contains("jaka") && wybor.contains("jest") && wybor.contains("pogoda") || wybor.contains("dziś"))
-        {
-            pogoda_wykonana=true;
-            if (aktualne.contains(Integer.valueOf(1)))
+        else if (wybor.contains("sprawdź") && wybor.contains("pogodę"))
+        {            
+            if (aktualne.contains(Integer.valueOf(2)) && pogoda_wykonana==false)
             {            
-                wypiszInfo.append("Brawo, spełniłeś warunki misji\n"+misje[1]+"\nOtrzymujesz 300 sztuk złota\n");
+                wypiszInfo.append("Brawo, spełniłeś warunki misji\n"+misje[2]+"\nOtrzymujesz 300 sztuk złota\n");
                 plansza.Armia_Zasoby().addZloto(300);
-                aktualne.remove(Integer.valueOf(1));
-            }
-            Random generator = new Random();
+                aktualne.remove(Integer.valueOf(2));
+                pogoda_wykonana=true;
+            }            
             wypiszInfo.append("Dzisiaj jest "+pogoda[generator.nextInt(pogoda.length)]+"\n");
-        }          
-        Random generator = new Random();
-        if (generator.nextInt(100)==1)
-        {
-            wypiszInfo.append("- Twoi poddani są niezadowoleni, żyją bardzo ubogo. Rozdaj wieśniakom 200 sztuk złota, aby poprawić swój autorytet.\n");
-            zdarzenie_losowe_wiesniacy=true;
-        }
+        }        
         else if (!"".equals(komendy.getText()) && komendy.getText()!=null && !"\n".equals(komendy.getText()))
         {            
-            //System.out.println(komendy.getText()+" "+plansza.getClass().toString());//funkcja kontrolna
+            System.out.println(komendy.getText()+" "+plansza.getClass().toString());//funkcja kontrolna
             //wybor=komendy.getText().toLowerCase().trim();       
             if (plansza.getClass().toString().contains("plansza3"))//komendy dla 3 piętra  
             {
-                if(wybor.contains("wypisz") && wybor.contains("liczebnosc") && wybor.contains("armii") && wybor.contains("wroga"))
-                    wypiszInfo.append(plansza3.Liczebnosc_Wojska_Wroga()+"\n");
-                else if(wybor.contains("walcz"))
-                    wypiszInfo.append(plansza3.Walka());
-                else if(wybor.contains("wyświetl parametry swojej armii"))
-                    wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Armii())+"\n");
+                if(wybor.contains("przejdź na piętro 1"))
+                {
+                    zmiana_planszy("plansza1");
+                    wypiszInfo.append("Przeszedłeś na 1 piętro\n");                        
+                }
+                else if(wybor.contains("przejdź na piętro 3"))
+                {
+                    wypiszInfo.append("Już jesteś na 3 piętrze\n");
+                }
+                else if(wybor.contains("przejdź na piętro 3"))
+                {
+                    zmiana_planszy("plansza2");
+                    wypiszInfo.append("Przeszedłeś na 2 piętro\n");
+                }   
                 else if(wybor.contains("wyświetl parametry armii wroga"))
                     wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Wroga())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Wroga())+"\n");                
-                else if(aktualne.contains(1) && (wybor.contains("poślij") && wybor.contains("żołnierzy")))
+                else if (wybor.contains("wyślij") && wybor.contains("armię") && wybor.contains("podatki"))
                 {
-                    if (plansza.Armia_Zasoby().getPiechur()>=3)
-                        plansza.Armia_Zasoby().addPiechur(-3);
+                    if (aktualne.contains(Integer.valueOf(1)))
+                    {
+                        if (plansza.Armia_Zasoby().getPiechur()>=3)
+                        {
+                            plansza.Armia_Zasoby().addPiechur(-3);                
+                        }
+                        else
+                        {
+                            wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji\n");
+                            dzien_misja_1=0;
+                            aktualne.remove(Integer.valueOf(1));
+                        }
+                        if (dzien_misja_1==3)
+                        {
+                            plansza.Armia_Zasoby().addPiechur(3);
+                            plansza.Armia_Zasoby().addZloto(500);
+                            aktualne.remove(Integer.valueOf(1));
+                            wypiszInfo.append("Brawo, wykonałeś misję\n"+misje[1]+"\nWysłani żołnierze wrócili oraz zdobywasz 500 sztuk złota\n");
+                            dzien_misja_1=0;
+                        }
+                    }
                     else
-                        wypiszInfo.append("Masz za mało żołnierzy\n");
+                        wypiszInfo.append("Nie masz dostępu do misji\n"+misje[1]+"\n");
                 }
-                else if (plansza.Armia_Zasoby().getKamien()<20)
+                else if(wybor.contains("wypisz") && wybor.contains("liczebność") && wybor.contains("armii") && wybor.contains("wroga"))
+                    wypiszInfo.append(plansza3.Liczebnosc_Wojska_Wroga()+"\n");
+                else if(wybor.contains("walcz"))
+                    wypiszInfo.append(plansza3.Walka());                
+                else
+                    wypiszInfo.append("Źle wprowadziles polecenie\n");
+                if (plansza.Armia_Zasoby().getKamien()<20)
                 {
                     wypiszInfo.append("Uwaga, zauważyłem, że masz mało kamienia, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
-                    if (wybor.contains("diament"))
-                    {
-                        if (plansza.Armia_Zasoby().getPiechur()>=1)
-                        {
-                            plansza.Armia_Zasoby().addPiechur(-1);
-                            plansza.Armia_Zasoby().addDiament(50);
-                        }
-                        else
-                            wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else if (wybor.contains("drewno"))
-                    {
-                        if (plansza.Armia_Zasoby().getPiechur()>=1)
-                        {
-                            plansza.Armia_Zasoby().addPiechur(-1);
-                            plansza.Armia_Zasoby().addDrewno(50);
-                        }
-                        else
-                            wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else if (wybor.contains("złoto") || wybor.contains("zloto"))
-                    {
-                        if (plansza.Armia_Zasoby().getPiechur()>=1)
-                        {
-                            plansza.Armia_Zasoby().addPiechur(-1);
-                            plansza.Armia_Zasoby().addZloto(50);
-                        }
-                        else
-                            wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else
-                        wypiszInfo.append("Źle wprowadziles polecenie\n");
+                    malo_kamien=true;                    
                 }
-                else if (plansza.Armia_Zasoby().getDrewno()<20)
+                if (plansza.Armia_Zasoby().getDrewno()<20)
                 {
                     wypiszInfo.append("Uwaga, zauważyłem, że masz mało drewna, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
-                    if (wybor.contains("diament"))
-                    {
-                        if (plansza.Armia_Zasoby().getPiechur()>=1)
-                        {
-                            plansza.Armia_Zasoby().addPiechur(-1);
-                            plansza.Armia_Zasoby().addDiament(50);
-                        }
-                        else
-                            wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else if (wybor.contains("kamień") || wybor.contains("kamien"))
-                    {
-                        if (plansza.Armia_Zasoby().getPiechur()>=1)
-                        {
-                            plansza.Armia_Zasoby().addPiechur(-1);
-                            plansza.Armia_Zasoby().addKamien(50);
-                        }
-                        else
-                            wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else if (wybor.contains("złoto") || wybor.contains("zloto"))
-                    {
-                        if (plansza.Armia_Zasoby().getPiechur()>=1)
-                        {
-                            plansza.Armia_Zasoby().addPiechur(-1);
-                            plansza.Armia_Zasoby().addZloto(50);
-                        }
-                        else
-                            wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else
-                        wypiszInfo.append("Źle wprowadziles polecenie\n");
+                    malo_drewno=true;   
                 }
-                else if (plansza.Armia_Zasoby().getDiament()<20)
+                if (plansza.Armia_Zasoby().getDiament()<2)
                 {
                     wypiszInfo.append("Uwaga, zauważyłem, że masz mało diamentów, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
-                    if (wybor.contains("kamień") || wybor.contains("kamien"))
+                    malo_diament=true;
+                    /*if (wybor.contains("kamień") || wybor.contains("kamien"))
                     {
                         if (plansza.Armia_Zasoby().getPiechur()>=1)
                         {
@@ -389,30 +401,40 @@ misje[0]+"\n");
                         }
                         else
                             wypiszInfo.append("Masz za mało piechurów\n");
-                    }
-                    else
-                        wypiszInfo.append("Źle wprowadziles polecenie\n");
-                }
+                    }                    
+                }*/                
+            }
             }
             else if(plansza.getClass().toString().contains("plansza2"))//komendy dla 2 piętra
             {
                 //switch(wybor)
                 //{może tak będzie wyglądać jak nie będzie xml-a
-                    if(wybor.contains("przejdź do 1 piętra"))
+                    if(wybor.contains("przejdź na piętro 1"))
                     {
                         zmiana_planszy("plansza1");
                         wypiszInfo.append("Przeszedłeś na 1 piętro\n");                        
                     }
-                    else if(wybor.contains("przejdź do 2 piętra"))
+                    else if(wybor.contains("przejdź na piętro 2"))
                     {
                         wypiszInfo.append("Już jesteś na 2 piętrze\n");
                     }
-                    else if(wybor.contains("przejdź do 3 piętra"))
+                    else if(wybor.contains("pokaż stan wojska"))
+                        wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Armii())+"\n");                   
+                    else if(aktualne.contains(1) && (wybor.contains("poślij") && wybor.contains("żołnierzy")))
+                    {
+                        if (plansza.Armia_Zasoby().getPiechur()>=3)
+                            plansza.Armia_Zasoby().addPiechur(-3);
+                        else
+                            wypiszInfo.append("Masz za mało żołnierzy\n");
+                    }
+                    else if(wybor.contains("liczba") && wybor.contains("żołnierzy"))
+                        wypiszInfo.append(plansza3.Liczebnosc_Wojska()+"\n");
+                    else if(wybor.contains("przejdź na piętro 2"))
                     {
                         zmiana_planszy("plansza3");
                         wypiszInfo.append("Przeszedłeś na 3 piętro\n");
                     }                      
-                    //case "wytrenuj husarza"
+                    //case "wytrenuj husarza"                    
                     else if(wybor.contains("wytrenuj piechura"))//ulepsz
                     {
                         wypiszInfo.append(plansza2.ulepszenia("piechur")+"\n");
@@ -423,21 +445,81 @@ misje[0]+"\n");
                         wypiszInfo.append(plansza2.ulepszenia("husarz")+"\n");                        
                     else if(wybor.contains("dodaj") && (wybor.contains("piechura") || wybor.contains("piechurów") || wybor.contains("piechurow")))
                     { 
-                        Kup_Jednostke("wytrenuj piechura");                        
+                        //Kup_Jednostke("wytrenuj piechura");  
+                        System.out.println(plansza.Armia_Zasoby().getZloto()+" "+plansza.Armia_Zasoby().getDrewno()+" "+Liczba_Jednostek());
+                        if (plansza.Armia_Zasoby().getZloto()>=90*Liczba_Jednostek() && plansza.Armia_Zasoby().getDrewno()>=10*Liczba_Jednostek())
+                        {
+                            if (Liczba_Jednostek()>0)
+                            {
+                                try
+                                {                 
+                                    liczba_jednostek=Liczba_Jednostek();
+                                    wypiszInfo.append("Zużyjesz na to: "+90*Liczba_Jednostek()+" złota, "+10*Liczba_Jednostek()+" drewna\nJesteś pewien swojej decyzji\n");
+                                    tworzenie_piechurow=true;
+                                }
+                                catch(NumberFormatException e)
+                                {
+                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                }
+                            }
+                            else 
+                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                        }                            
+                        else
+                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
                     }
                     else if(wybor.contains("dodaj") && (wybor.contains("kusznika") || wybor.contains("kuszników") || wybor.contains("kusznikow")))
                     {                        
-                        Kup_Jednostke("wytrenuj kusznika");
+                        if (plansza.Armia_Zasoby().getZloto()>=140*Liczba_Jednostek() && plansza.Armia_Zasoby().getKamien()>=7*Liczba_Jednostek())
+                        {
+                            if (Liczba_Jednostek()>0)
+                            {
+                                try
+                                {      
+                                    liczba_jednostek=Liczba_Jednostek();
+                                    wypiszInfo.append("Zużyjesz na to: "+140*Liczba_Jednostek()+" złota, "+7*Liczba_Jednostek()+" kamienia\nJesteś pewien swojej decyzji\n");
+                                    tworzenie_kusznikow=true;
+                                }
+                                catch(NumberFormatException e)
+                                {
+                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                }
+                            }
+                            else 
+                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                        }                            
+                        else
+                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
+                        //Kup_Jednostke("wytrenuj kusznika");
                     }
                     else if(wybor.contains("dodaj") && (wybor.contains("husarza") || wybor.contains("husarzy")))
                     {
-                        Kup_Jednostke("wytrenuj husarza");                       
+                        if (plansza.Armia_Zasoby().getZloto()>=200*Liczba_Jednostek() && plansza.Armia_Zasoby().getDiament()>=10*Liczba_Jednostek())
+                        {
+                            if (Liczba_Jednostek()>0)
+                            {
+                                try
+                                {         
+                                    liczba_jednostek=Liczba_Jednostek();
+                                    wypiszInfo.append("Zużyjesz na to: "+200*Liczba_Jednostek()+" złota, "+10*Liczba_Jednostek()+" diamentów\nJesteś pewien swojej decyzji\n");
+                                    tworzenie_husarzy=true;
+                                }
+                                catch(NumberFormatException e)
+                                {                                    
+                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                }
+                            }
+                            else 
+                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                        }                            
+                        else
+                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
+                        //Kup_Jednostke("wytrenuj husarza");                       
                     }
                     else if(wybor.contains("wyjdź z gry"))
                     {
                         System.exit(0); 
-                    }
-                    
+                    }                    
                     else
                         wypiszInfo.append("Źle wprowadziles polecenie\n");
                 //}                
@@ -448,50 +530,62 @@ misje[0]+"\n");
             }
             else if (plansza.getClass().toString().contains("plansza1"))//komendy dla 1 piętra
             {
-                if(wybor.contains("przejdź do 1 piętra"))
+                if(wybor.contains("przejdź na piętro 1"))
                     wypiszInfo.append("Już jesteś na 1 piętrze\n");
-                else if(wybor.contains("przejdź do 2 piętra"))
+                else if(wybor.contains("przejdź na piętro 2"))
                 {
                    zmiana_planszy("plansza2");
                    wypiszInfo.append("Przeszedłeś na 2 piętro\n");
                 }                        
-                else if(wybor.contains("przejdź do 3 piętra"))
+                else if(wybor.contains("przejdź na piętro 3"))
                 {
                    zmiana_planszy("plansza3");
                    wypiszInfo.append("Przeszedłeś na 3 piętro\n");
                 }
                 else if(wybor.contains("wyświetl statystyki"))
                    wypiszInfo.append(plansza1.wyswietlstatystyki()+"\n");//nie wiem czy to zostawic w tym pietrze, czy dać do zbrojowni
-                else if(wybor.contains("wyświetl zasoby"))
+                else if(wybor.contains("pokaż zasoby"))
                    wypiszInfo.append(plansza1.Zasoby()+"\n"); 
+                else if(wybor.contains("pokaż ile złota"))
+                   wypiszInfo.append(plansza1.getZloto()+"\n"); 
+                else if(wybor.contains("pokaż ile kamienia"))
+                   wypiszInfo.append(plansza1.getKamien()+"\n"); 
+                else if(wybor.contains("pokaż ile drewna"))
+                   wypiszInfo.append(plansza1.getDrewno()+"\n"); 
+                else if(wybor.contains("pokaż ile diamentów"))
+                   wypiszInfo.append(plansza1.getDiament()+"\n"); 
                 else if (zdarzenie_losowe_wiesniacy==true && wybor.contains("przekaż") && wybor.contains("zloto") && wybor.contains("wieśniakom"))
                 {
-                    plansza.Armia_Zasoby().addZloto(-200);
-                    plansza.Armia_Zasoby().addPiechur(1);
-                    zdarzenie_losowe_wiesniacy=false;
-                    wypiszInfo.append("Wieśniacy są zadowoleni, w zamian jeden z nich dołącza do twojej armii(piechur)");
+                    if (plansza.Armia_Zasoby().getZloto()>200)
+                    {
+                        plansza.Armia_Zasoby().addZloto(-200);
+                        plansza.Armia_Zasoby().addPiechur(1);
+                        zdarzenie_losowe_wiesniacy=false;
+                        wypiszInfo.append("Wieśniacy są zadowoleni, w zamian jeden z nich dołącza do twojej armii(piechur)");
+                    }
+                    else
+                        wypiszInfo.append("Nie masz wystarczającej ilości złota\n");
                 }
                 else
                     wypiszInfo.append("Źle wprowadziles polecenie\n");
-                }
-            }  
+            }                  
         komendy.setText("");
+        }
     }       
-    private void Kup_Jednostke(String jednostka)
+    private int Liczba_Jednostek()
     {
         for (int i=0;i<wybor.length();i++)
         {
             if(Character.isDigit(wybor.charAt(i)) && Character.isDigit(wybor.charAt(i+1)))
             {
-                wypiszInfo.append(plansza2.kup_jednostke(jednostka,Integer.parseInt(Character.toString(wybor.charAt(i)))*10+Integer.parseInt(Character.toString(wybor.charAt(i+1))))+"\n");                            
-                break;
+                return Integer.parseInt(String.valueOf(wybor.charAt(i)*10+wybor.charAt(i+1)));
             }
             else if (Character.isDigit(wybor.charAt(i)))
             {
-                wypiszInfo.append(plansza2.kup_jednostke(jednostka,Integer.parseInt(Character.toString(wybor.charAt(i))))+"\n");
-                break;
+                return Integer.parseInt(String.valueOf(wybor.charAt(i)));
             }
         }
+        return -1;
     }
     private int Wyswietl_Dzien()
     {
@@ -500,7 +594,28 @@ misje[0]+"\n");
     private int Nastepny_Dzien()
     {
         dzien++;
-        dzien_misja_1++;
+        if (dzien_misja_1>0)
+            dzien_misja_1++;
+        if (dzien==5 && aktualne.contains(0))
+        {            
+            if (plansza.Armia_Zasoby().getDefence()>=100)
+            {
+                wypiszInfo.append("Brawo, spełniłeś warunki misji "+misje[0]+"\n");
+                aktualne.remove(Integer.valueOf(0));
+            }
+            else
+            {
+                wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji\n"+misje[0]+"\n");
+                try 
+                {
+                    Thread.sleep(6000);//czekanie 6 sekund
+                } catch (InterruptedException ex) 
+                {
+                    Logger.getLogger(Szkielet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.exit(0);
+            }
+        }        
         //dodawanie zasobów przy przejściu do następnego dnia
         /*wojsko.addZloto();
         wojsko.addKamien();
@@ -534,7 +649,7 @@ misje[0]+"\n");
         super("Gra Zamek");  
         image = ImageIO.read(icon);
         komendy.setText("Tu wpisujemy polecenia");   
-        wypiszInfo.setOpaque(true);
+        //wypiszInfo.setOpaque(true);
         /*this.document = (Document) builder.build(xmlFile);
         Element rootNode = document.getRootElement();
         //setResizable(false);
@@ -563,18 +678,17 @@ misje[0]+"\n");
         komendy.setEnabled(true);
         komendy.setVisible(true);    
         setResizable(false);
-        aktualne.add(0);
+        aktualne.add(0);        
         pack();        
         komendy.addActionListener(new java.awt.event.ActionListener() 
         {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) 
             {
-                try 
+                try
                 {
                     komendyActionPerformed(evt);
-                } catch (InterruptedException | IOException ex) 
-                {
+                } catch (InterruptedException | IOException ex) {
                     Logger.getLogger(Szkielet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }            
@@ -593,7 +707,9 @@ misje[0]+"\n");
     {
         //plansza.removeAll();
         //Interfejs();
-        remove(plansza);         
+        remove(plansza);  
+        remove(komendy);
+        remove(wypiszInfo);
         //add(scrollPane);
         add(komendy); 
         add(wypiszInfo);
@@ -661,43 +777,8 @@ misje[0]+"\n");
     @Override
     public void mouseMoved(MouseEvent e) //tu będą sprawdzane warunki niektórych misji
     {        
-        if (dzien==5 && aktualne.contains(0))
-        {            
-            if (plansza.Armia_Zasoby().getDefence()>=100)
-            {
-                wypiszInfo.append("Brawo, spełniłeś warunki misji "+misje[0]+"\n");
-                aktualne.remove(Integer.valueOf(0));
-            }
-            else
-            {
-                wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji\n"+misje[0]+"\n");
-                try 
-                {
-                    Thread.sleep(6000);//czekanie 6 sekund
-                } catch (InterruptedException ex) 
-                {
-                    Logger.getLogger(Szkielet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                System.exit(0);
-            }
-        }        
-        if (aktualne.contains(Integer.valueOf(1)))
-        {
-            if (plansza.Armia_Zasoby().getPiechur()>=3 && dzien_misja_1==0)
-            {
-                plansza.Armia_Zasoby().addPiechur(-3); 
-                if (dzien_misja_1==0)
-                    dzien_misja_1++;
-            }
-            if (dzien_misja_1==3)
-            {
-                plansza.Armia_Zasoby().addPiechur(3);
-                plansza.Armia_Zasoby().addZloto(500);
-                wypiszInfo.append("Brawo, wykonałeś misję\n"+misje[1]+"\nWysłani żołnierze wrócili oraz zdobywasz 500 sztuk złota");
-                dzien_misja_1=0;
-            }
-        }        
+                
         // wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji
         // wypiszInfo.append("Brawo, spełniłeś warunki misji        
-    }
+    }        
 }

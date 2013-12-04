@@ -25,13 +25,13 @@ public class plansza2 extends plansza_podst
             switch (jednostka)//wywoływane będą takźe inne metody
             {
                 case "wytrenuj husarza":
-                    wojsko.addHusarz(liczba);
+                    wojsko.dodaj("husarz",liczba);
                     return "Dodano "+liczba+" Husarza/y";
                 case "wytrenuj kusznika":
-                    wojsko.addKusznik(liczba);                
+                    wojsko.dodaj("kusznik",liczba);                
                     return "Dodano "+liczba+" Kusznika/ów";
                 case "wytrenuj piechura":
-                    wojsko.addPiechur(liczba);
+                    wojsko.dodaj("piechur",liczba);
                     return "Dodano "+liczba+" Piechura/ów";
                 default:                
                     return "Błąd";

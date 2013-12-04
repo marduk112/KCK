@@ -18,8 +18,8 @@ public class Wojsko extends Krol
     private int obronak=5; // sila obrony kusznika
     private int atakp=6; //sila ataku piechura
     private int obronap=7; //sila obrony piechura    
-    private int defence; //obrona calej armii
-    private int attack; // atak calej armii    
+    private int defence=0; //obrona calej armii
+    private int attack=0; // atak calej armii    
     //public Krol krol=new Krol();
     
     
@@ -62,8 +62,8 @@ public class Wojsko extends Krol
         //public void setAttack(int i) { attack = i; }        
         private void zmien()
         {                //zmiana calkowitej obrony i ataku po modernizacji
-                defence=(getHusarz()*getObronah()+getKusznik()*getObronak()+getPiechur()*getObronap());
-                attack=(getHusarz()*getAtakh()+getKusznik()*getAtakk()+getPiechur()*getAtakp());
+                defence=getHusarz()*getObronah()+getKusznik()*getObronak()+getPiechur()*getObronap();
+                attack=getHusarz()*getAtakh()+getKusznik()*getAtakk()+getPiechur()*getAtakp();
         }           
         public void ulepsz(String jednostka) 
         {                                                //ulepszanie armii

@@ -27,4 +27,20 @@ public class plansza1 extends plansza_podst
     {
         return "Liczba utworzonych jednostek: "+wojsko.Liczba_Jednostek()+"\nLiczba zabitych jednostek: "+"\n";
     }
+    public int getZloto()
+    {
+        return wojsko.getZloto();
+    }
+    public int getDiament()
+    {
+        return wojsko.getDiament();
+    }
+    public int getDrewno()
+    {
+        return wojsko.getDrewno();
+    }
+    public int getKamien()
+    {
+        return wojsko.getKamien();
+    }
 }

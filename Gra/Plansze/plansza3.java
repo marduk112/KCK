@@ -26,10 +26,7 @@ public class plansza3 extends plansza_podst
     private String Utrata_Jednostek(float procent)
     {        
         int pomoc=(int)(wojsko.Liczba_Jednostek()*procent);
-        int zwroc=pomoc;
-        int wrog_liczba_husarzy=wrog.getHusarz();
-        int wrog_liczba_piechurow=wrog.getPiechur();
-        int wrog_liczba_kusznicy=wrog.getKusznik();
+        int zwroc=pomoc;        
         if (wojsko.getObronah()<wojsko.getObronak())
         {
             if (wojsko.getObronah()<wojsko.getObronap())
@@ -209,9 +206,9 @@ public class plansza3 extends plansza_podst
     */
     public String Walka()
     {
-        wrog.addPiechur(4);
-        wrog.addKusznik(3);
-        wrog.addHusarz(2);        
+        wrog.dodaj("piechur",4);
+        wrog.dodaj("kusznik",3);
+        wrog.dodaj("husarz",2);        
         if (wojsko.getDefence()>wrog.getDefence() && wrog.getDefence()*1.7 < wojsko.getDefence() && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
             return Utrata_Jednostek((float)0.1);
         if (wojsko.getDefence()>wrog.getDefence() && (wrog.getDefence()*1.5 < wojsko.getDefence() && wojsko.getDefence() <= wrog.getDefence()*1.7) && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
@@ -247,15 +244,15 @@ public class plansza3 extends plansza_podst
             return Utrata_Jednostek((float)0.05);        
         else
         {
-            wojsko.addPiechur(-wojsko.getPiechur());
-            wojsko.addKusznik(-wojsko.getKusznik());
-            wojsko.addHusarz(-wojsko.getHusarz());
+            wojsko.dodaj("piechur",-wojsko.getPiechur());
+            wojsko.dodaj("kusznik",-wojsko.getKusznik());
+            wojsko.dodaj("husarz",-wojsko.getHusarz());
             return "Utraciłeś wszystkie jednostki";
         }        
     }
     public String Liczebnosc_Wojska_Wroga()
     {
-        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+(wrog.getHusarz()+2)+"\nLiczba kuszników: "+(wrog.getKusznik()+3)+"\nLiczba piechurów: "+(wrog.getPiechur()+4)+"\nWszystkich jednostek razem jest: "+wojsko.liczebność();
+        return "Liczba poszczególnych jednostek\nLiczba husarzy: "+(wrog.getHusarz()+2)+"\nLiczba kuszników: "+(wrog.getKusznik()+3)+"\nLiczba piechurów: "+(wrog.getPiechur()+4)+"\nWszystkich jednostek razem jest: "+wrog.liczebność();
     }
     public String Liczebnosc_Wojska()
     {
@@ -272,10 +269,10 @@ public class plansza3 extends plansza_podst
     }
     public int Wyswietlenie_Ataku_Wroga()
     {
-        return wojsko.getAttack();
+        return wrog.getAttack();
     }
     public int Wyswietlenie_Obrony_Wroga()
     {
-        return wojsko.getDefence();
+        return wrog.getDefence();
     }
 }
