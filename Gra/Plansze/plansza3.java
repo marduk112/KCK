@@ -199,11 +199,11 @@ public class plansza3 extends plansza_podst
         wojsko.addKamien(wrog.getKusznik()*5);
         wojsko.addZloto(wrog.getPiechur()*3+wrog.getKusznik()*3+wrog.getHusarz()*2);
         wojsko.addDiament(wrog.getHusarz()*3);        
-        return "Utraciłeś "+zwroc+" jednostek";
-    }
+        return "Wygrałeś. Utraciłeś "+zwroc+" jednostek";
+    }    
     /*
     * Algorytm walki, dokładne warunki zwycięstwa opisane są w dokumentacji
-    */
+    */    
     public String Walka()
     {
         wrog.dodaj("piechur",4);

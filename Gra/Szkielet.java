@@ -57,6 +57,9 @@ misje[0]+"\n");
     private boolean malo_kamien=false;
     private boolean malo_drewno=false;
     private boolean malo_diament=false;
+    private boolean zamiana_zasobow;
+    private boolean przyjecie_zasobow;
+    private int planowany_atak;
     private void Interfejs()
     {         
         scrollPane.setViewportView(wypiszInfo);
@@ -212,6 +215,47 @@ misje[0]+"\n");
             wypiszInfo.append("- Twoi poddani są niezadowoleni, żyją bardzo ubogo. Rozdaj wieśniakom 200 sztuk złota, aby poprawić swój autorytet.\n");
             zdarzenie_losowe_wiesniacy=true;
         }
+        if (generator.nextInt(10)==2)
+        {
+            int max=Math.max(Math.max(Math.max(plansza1.getDiament(), plansza1.getDrewno()), plansza1.getZloto()), plansza1.getKamien());
+            String max_zasob;
+            String inny_zasob;
+            int pomoc;
+            if (max==plansza1.getDrewno())
+                max_zasob="drewna";
+            else if (max==plansza1.getDiament())
+                max_zasob="diamentów";
+            else if (max==plansza1.getZloto())
+                max_zasob="złota";
+            else        //sprawdzamy kamień
+                max_zasob="kamienia";
+            pomoc=generator.nextInt(4);
+            if (pomoc==0)
+                inny_zasob="drewna";
+            else if (pomoc==1)
+                inny_zasob="diamentów";
+            else if (pomoc==2)
+                inny_zasob="złota";
+            else
+                inny_zasob="kamienia";
+            wypiszInfo.append("Sąsiednie królestwo chciałoby zamienić 10 sztuk "+max_zasob+" na 10 sztuk "+inny_zasob+" Przyjmujesz?\n");
+            zamiana_zasobow=true;
+        }
+        if (generator.nextInt(50)==1)
+        {
+            int pomoc=generator.nextInt(4);
+            String zasob;
+            if (pomoc==0)
+                zasob="drewna";
+            else if (pomoc==1)
+                zasob="diamentów";
+            else if (pomoc==2)
+                zasob="złota";
+            else
+                zasob="kamienia";
+            wypiszInfo.append("Sąsiednie królestwo w ramach sojuszu przesyła 15 "+zasob+". Przyjmujesz?\n");
+            przyjecie_zasobow=true;
+        }
         if (wybor.contains("tak") || wybor.contains("przyjmuję"))//tu będą przyjmowane misje,zdarzenia
         {      
             System.out.println("mi");
@@ -259,9 +303,31 @@ misje[0]+"\n");
                 aktualne.add(misja);
                 misja=-1;
             }
+            else if (przyjecie_zasobow==true)
+            {
+                wypiszInfo.append("Brawo. Przyjąłeś\n");                
+                przyjecie_zasobow=false;
+            }
+            else if (zamiana_zasobow==true)
+            {
+                //plansza1
+                wypiszInfo.append("Dokonano transferu zasobów\n");
+                zamiana_zasobow=false;
+            }
             else            
                 wypiszInfo.append("Nie wybrałeś żadnej misji\n");            
-        } 
+        }         
+        else if (planowany_atak==0)
+        {
+            wypiszInfo.append("Zostałeś zaatakowany w związku z nieprzyjęciem zasobów\n");
+            wypiszInfo.append(plansza3.Walka());
+        }
+        if (przyjecie_zasobow==true)//obsługa odmów
+        {
+            wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");
+            planowany_atak=5;
+            przyjecie_zasobow=false;
+        }
         else if (wybor.contains("wybieram") && (wybor.contains("misje") || wybor.contains("misję")) || wybor.contains("nr") || wybor.contains("numer"))
         {
             //wypiszInfo.append("Na pewno?\n");              
@@ -608,7 +674,7 @@ misje[0]+"\n");
                 wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji\n"+misje[0]+"\n");
                 try 
                 {
-                    Thread.sleep(6000);//czekanie 6 sekund
+                    Thread.sleep(6000);//czekanie 6 sekund                    
                 } catch (InterruptedException ex) 
                 {
                     Logger.getLogger(Szkielet.class.getName()).log(Level.SEVERE, null, ex);
@@ -616,6 +682,8 @@ misje[0]+"\n");
                 System.exit(0);
             }
         }        
+        if (planowany_atak>0)
+            planowany_atak--;
         //dodawanie zasobów przy przejściu do następnego dnia
         /*wojsko.addZloto();
         wojsko.addKamien();
