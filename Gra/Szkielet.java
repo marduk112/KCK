@@ -25,9 +25,9 @@ import javax.swing.JTextField;
 import org.jdom2.JDOMException;
 public class Szkielet extends JFrame implements MouseListener, MouseMotionListener
 {        
-    //private SAXBuilder builder = new SAXBuilder();
-    //private File xmlFile = new File("src/gwiazdy.xml");
-    //private Document document;
+    /*private SAXBuilder builder = new SAXBuilder();
+    private File xmlFile = new File("src/interpreter.xml");
+    private Document document;*/
     private plansza_podst plansza;  
     private static String wybor;           	
     private final File icon = new File("src/Gra/Plansze/images/menu.jpg");
@@ -60,6 +60,9 @@ misje[0]+"\n");
     private boolean zamiana_zasobow;
     private boolean przyjecie_zasobow;
     private int planowany_atak;
+    private String max_zasob;
+    private String inny_zasob;
+    private String zasob;
     private void Interfejs()
     {         
         scrollPane.setViewportView(wypiszInfo);
@@ -217,9 +220,7 @@ misje[0]+"\n");
         }
         if (generator.nextInt(10)==2)
         {
-            int max=Math.max(Math.max(Math.max(plansza1.getDiament(), plansza1.getDrewno()), plansza1.getZloto()), plansza1.getKamien());
-            String max_zasob;
-            String inny_zasob;
+            int max=Math.max(Math.max(Math.max(plansza1.getDiament(), plansza1.getDrewno()), plansza1.getZloto()), plansza1.getKamien());            
             int pomoc;
             if (max==plansza1.getDrewno())
                 max_zasob="drewna";
@@ -241,10 +242,15 @@ misje[0]+"\n");
             wypiszInfo.append("Sąsiednie królestwo chciałoby zamienić 10 sztuk "+max_zasob+" na 10 sztuk "+inny_zasob+" Przyjmujesz?\n");
             zamiana_zasobow=true;
         }
+        else if (przyjecie_zasobow==true)//obsługa odmów
+        {
+            wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");
+            planowany_atak=5;
+            przyjecie_zasobow=false;
+        }
         if (generator.nextInt(50)==1)
         {
-            int pomoc=generator.nextInt(4);
-            String zasob;
+            int pomoc=generator.nextInt(4);            
             if (pomoc==0)
                 zasob="drewna";
             else if (pomoc==1)
@@ -265,6 +271,49 @@ misje[0]+"\n");
                 plansza.Armia_Zasoby().addKamien(50);
                 malo_kamien=false;
                 wypiszInfo.append("Zdobyto 50 sztuk kamienia\n");
+            }
+            else if (zamiana_zasobow==true)// misja zamiany zasobów
+            {
+                if ("drewna".equals(max_zasob))                
+                    plansza.Armia_Zasoby().addDrewno(-10);      
+                if ("złota".equals(max_zasob))                
+                    plansza.Armia_Zasoby().addZloto(-10);
+                if ("kamienia".equals(max_zasob))                
+                    plansza.Armia_Zasoby().addKamien(-10);
+                if ("diamentów".equals(max_zasob))                
+                    plansza.Armia_Zasoby().addDiament(-10);
+                if ("drewna".equals(inny_zasob))                
+                    plansza.Armia_Zasoby().addDrewno(10);
+                if ("złota".equals(inny_zasob))                
+                    plansza.Armia_Zasoby().addZloto(10);
+                if ("kamienia".equals(inny_zasob))                
+                    plansza.Armia_Zasoby().addKamien(10);
+                if ("diamentów".equals(inny_zasob))                
+                    plansza.Armia_Zasoby().addDiament(10);
+            }
+            else if (przyjecie_zasobow==true)//misja przyjęcia zasobów
+            {
+                if ("drewna".equals(zasob))
+                {                   
+                    wypiszInfo.append("Otrzymałeś 15 sztuk "+zasob+"\n");                    
+                    plansza.Armia_Zasoby().addDrewno(15);
+                }
+                if ("kamienia".equals(zasob))
+                {
+                    wypiszInfo.append("Otrzymałeś 15 sztuk "+zasob+"\n");
+                    plansza.Armia_Zasoby().addKamien(15);
+                }
+                if ("diamentów".equals(zasob))
+                {
+                    wypiszInfo.append("Otrzymałeś 15 sztuk "+zasob+"\n");
+                    plansza.Armia_Zasoby().addDiament(15);
+                }
+                if ("złota".equals(zasob))
+                {
+                    wypiszInfo.append("Otrzymałeś 15 sztuk "+zasob+"\n");
+                    plansza.Armia_Zasoby().addZloto(15);
+                }
+                przyjecie_zasobow=false;
             }
             else if (malo_drewno==true)
             {
@@ -321,13 +370,7 @@ misje[0]+"\n");
         {
             wypiszInfo.append("Zostałeś zaatakowany w związku z nieprzyjęciem zasobów\n");
             wypiszInfo.append(plansza3.Walka());
-        }
-        if (przyjecie_zasobow==true)//obsługa odmów
-        {
-            wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");
-            planowany_atak=5;
-            przyjecie_zasobow=false;
-        }
+        }        
         else if (wybor.contains("wybieram") && (wybor.contains("misje") || wybor.contains("misję")) || wybor.contains("nr") || wybor.contains("numer"))
         {
             //wypiszInfo.append("Na pewno?\n");              
@@ -690,44 +733,17 @@ misje[0]+"\n");
         wojsko.addDrewno();
         wojsko.addDiament();*/
         return dzien;
-    }
-    /*public Szkielet(Element node) 
-    {
-        
-        if (!node.getName().equals("gwiazda")) 
-        {
-            throw new RuntimeException("Wrong element type");
-        } 
-        this.nazwisko = node.getChildText("nazwisko");
- 
-        for (Element el : (List<Element>) node.getChildren("adres")) {
-            this.adresy.add(el.getText());
-        }
- 
-        Element filmy = node.getChild("filmy");
- 
-        if (filmy != null) {
-            for (Element el : (List<Element>) filmy.getChildren("film")) {
-                this.filmy.add(new Film(el));
-            }
-        }
-    }*/
+    }   
     public Szkielet() throws IOException, JDOMException 
     {        
         super("Gra Zamek");  
         image = ImageIO.read(icon);
         komendy.setText("Tu wpisujemy polecenia");   
         //wypiszInfo.setOpaque(true);
-        /*this.document = (Document) builder.build(xmlFile);
+        /*document = (Document) builder.build(xmlFile);
         Element rootNode = document.getRootElement();
         //setResizable(false);
-        List list = rootNode.getChildren("gwiazda"); 
-        for (int i = 0; i<list.getSize(); i++) 
-        {
-            Element node = (Element) list.getItem(i);
-            Szkielet gw = new Szkielet(node);
-            res.add(gw);
-        }*/
+        List<Element> list=rootNode.getChildren("wybor");*/        
         wypiszInfo.setColumns(80);        
         wypiszInfo.setRows(5);
         plansza = new menu();        
