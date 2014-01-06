@@ -199,16 +199,13 @@ public class plansza3 extends plansza_podst
         wojsko.addKamien(wrog.getKusznik()*5);
         wojsko.addZloto(wrog.getPiechur()*3+wrog.getKusznik()*3+wrog.getHusarz()*2);
         wojsko.addDiament(wrog.getHusarz()*3);        
-        return "Wygrałeś. Utraciłeś "+zwroc+" jednostek";
+        return "Wygrałeś. Utraciłeś "+zwroc+" jednostek\n";
     }    
     /*
     * Algorytm walki, dokładne warunki zwycięstwa opisane są w dokumentacji
     */    
     public String Walka()
-    {
-        wrog.dodaj("piechur",4);
-        wrog.dodaj("kusznik",3);
-        wrog.dodaj("husarz",2);        
+    {               
         if (wojsko.getDefence()>wrog.getDefence() && wrog.getDefence()*1.7 < wojsko.getDefence() && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
             return Utrata_Jednostek((float)0.1);
         if (wojsko.getDefence()>wrog.getDefence() && (wrog.getDefence()*1.5 < wojsko.getDefence() && wojsko.getDefence() <= wrog.getDefence()*1.7) && wojsko.getAttack()<wrog.getAttack() && wojsko.getAttack()>=wrog.getAttack()*0.8)
@@ -247,7 +244,7 @@ public class plansza3 extends plansza_podst
             wojsko.dodaj("piechur",-wojsko.getPiechur());
             wojsko.dodaj("kusznik",-wojsko.getKusznik());
             wojsko.dodaj("husarz",-wojsko.getHusarz());
-            return "Utraciłeś wszystkie jednostki";
+            return "Utraciłeś wszystkie jednostki\n";
         }        
     }
     public String Liczebnosc_Wojska_Wroga()
