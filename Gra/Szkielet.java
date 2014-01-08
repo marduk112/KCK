@@ -41,6 +41,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private final JTextArea wypiszInfo = new JTextArea("Witaj królu.\nWrogie jednostki zbliżają się do naszego zamku. Rozbuduj armię, zabaj o właściwą ilość zasobów i uchroń zamek przed inwazją.\nW przeciągu 5 dni w świecie gry rozbuduj armię do poziomu obrony 100\n");
     private final JTextField komendy = new JTextField(); //pole w którym wpisujemy polecenia
     private final JScrollPane scrollPane = new JScrollPane(wypiszInfo); //pasek zawijania dla pola tekstowego przechowującego efekty działania komend(odpowiedzi komputera)
+    private final JScrollPane zawijanie = new JScrollPane();
+    private final JTextArea warunki = new JTextArea();
     private plansza1 plansza1 = new plansza1();//I piętro-ładowanie planszy
     private plansza2 plansza2 = new plansza2();//II piętro-ładowanie planszy
     private plansza3 plansza3 = new plansza3();//III piętro-ładowanie planszy
@@ -63,9 +65,13 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private String inny_zasob;
     private String zasob;
     private boolean pomoc;
+    private boolean tak=false;
     private void Interfejs()
     {         
-        scrollPane.setViewportView(wypiszInfo);
+        scrollPane.setViewportView(wypiszInfo);        
+        warunki.setColumns(10);
+        warunki.setRows(3);
+        zawijanie.setViewportView(warunki);
         javax.swing.GroupLayout planszaLayout = new javax.swing.GroupLayout(plansza);
         plansza.setLayout(planszaLayout);
         planszaLayout.setHorizontalGroup
@@ -73,6 +79,11 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             planszaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)            
             .addComponent(scrollPane, 300, 662, 962)
             .addComponent(komendy, 300, 662, 962)
+            .addGroup(planszaLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(185, Short.MAX_VALUE))
+                
         );
         planszaLayout.setVerticalGroup
         (
@@ -82,6 +93,10 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 .addComponent(komendy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(planszaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +110,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(plansza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         ); 
+        
         pack();        
     }
     /*
@@ -103,7 +119,22 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     */    
     private void komendyActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException, IOException
     {         
+        tak=false;
         wybor=komendy.getText().toLowerCase().trim();
+        warunki.setText("");
+        warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
+        +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n\n");        
+        if (aktualne.contains(Integer.valueOf(0)))
+        {
+            if (plansza3.Armia_Zasoby().getDefence()>=100)
+            {
+                wypiszInfo.append("Spełniłeś warunki misji(zdobycie obrony armii >=100)\n");
+            }
+            else
+            {
+                warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100\n");
+            }
+        }
         if (wybor.contains("jak") && (wybor.contains("cos") || wybor.contains("coś")) && (wybor.contains("robić") || wybor.contains("robic")))
         {
             wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
@@ -112,19 +143,21 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         //komendy wspólne       
         if (plansza.Armia_Zasoby().getZloto()<60)
         {
-            wypiszInfo.append("- Królu! Brakuje nam złota w skarbcu, wyślij armię do pobliskiej wioski, aby zebrali podatki.\n");            
+            wypiszInfo.append("- Królu! Brakuje nam złota w skarbcu, wyślij armię do pobliskiej wioski, aby zebrali podatki.\n"); 
+            warunki.append("-"+misje[1]+"\n");
             aktualne.add(1);
         }        
         Random generator = new Random();
         if (generator.nextInt(100)==1)//generator 1% szansy na zdarzenie, zdarzenie losowe
         {
             wypiszInfo.append("- Twoi poddani są niezadowoleni, żyją bardzo ubogo. Rozdaj wieśniakom 200 sztuk złota, aby poprawić swój autorytet.\n");
+            warunki.append("-Rozdaj wieśniakom 200 sztuk złota, aby poprawić swój autorytet.\n\n");
             zdarzenie_losowe_wiesniacy=true;
         }
         if (generator.nextInt(50)==2)//zdarzenie losowe
         {
             int max=Math.max(Math.max(Math.max(plansza1.getDiament(), plansza1.getDrewno()), plansza1.getZloto()), plansza1.getKamien());            
-            int pomoc;
+            int pomoc1;
             if (max==plansza1.getDrewno())
                 max_zasob="drewna";
             else if (max==plansza1.getDiament())
@@ -133,32 +166,35 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 max_zasob="złota";
             else        //sprawdzamy kamień
                 max_zasob="kamienia";
-            pomoc=generator.nextInt(4);
-            if (pomoc==0)
+            pomoc1=generator.nextInt(4);
+            if (pomoc1==0)
                 inny_zasob="drewna";
-            else if (pomoc==1)
+            else if (pomoc1==1)
                 inny_zasob="diamentów";
-            else if (pomoc==2)
+            else if (pomoc1==2)
                 inny_zasob="złota";
             else
                 inny_zasob="kamienia";
             wypiszInfo.append("Sąsiednie królestwo chciałoby zamienić 10 sztuk "+max_zasob+" na 10 sztuk "+inny_zasob+" Przyjmujesz?\n");
             zamiana_zasobow=true;
         }
-        if (przyjecie_zasobow==true && !(wybor.contains("tak") || wybor.contains("przyjmuję")))//obsługa odmów
+        if (przyjecie_zasobow==true && !wybor.contains("tak") && !wybor.contains("przyjmuję"))//obsługa odmów
         {
-            wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");
+            wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");            
             planowany_atak=5;
+            warunki.append("-Czas pozostały do ataku wrogich wojsk wynosi "+planowany_atak+" dni\n");
+            plansza3.Armia_Zasoby().addPiechur(3);
+            plansza3.Armia_Zasoby().addKusznik(2);
             przyjecie_zasobow=false;
         }
         if (generator.nextInt(50)==1)//zdarzenie losowe
         {
-            int pomoc=generator.nextInt(4);            
-            if (pomoc==0)
+            int pomoc1=generator.nextInt(4);            
+            if (pomoc1==0)
                 zasob="drewna";
-            else if (pomoc==1)
+            else if (pomoc1==1)
                 zasob="diamentów";
-            else if (pomoc==2)
+            else if (pomoc1==2)
                 zasob="złota";
             else
                 zasob="kamienia";
@@ -171,8 +207,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             pomoc=false;
         }
         if (wybor.contains("tak") || wybor.contains("przyjmuję"))//tu będą przyjmowane misje,zdarzenia
-        {      
-            System.out.println("mi");
+        {            
             if (pomoc==true)
             {
                 wypiszInfo.append("Wobec tego powodzenia\n");
@@ -264,10 +299,12 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             else if (misja!=-1)
             {
                 aktualne.add(misja);
+                warunki.append("-"+misje[misja]);
                 misja=-1;
             }             
             else            
-                wypiszInfo.append("Nie wybrałeś żadnej misji\n");            
+                wypiszInfo.append("Nie wybrałeś żadnej misji\n");  
+            tak=true;
         }         
         if (planowany_atak==0)
         {
@@ -293,7 +330,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 }            
             }         
-            wypiszInfo.append("Czy na pewno chcesz przyjąć misję\n"+misje[misja]+"\n");
+            if (misja!=0)
+                wypiszInfo.append("Czy na pewno chcesz przyjąć misję\n"+misje[misja]+"\n");
         }
         if (wybor.contains("wypisz") && (wybor.contains("dostępne") || wybor.contains("dostepne")) && wybor.contains("misje"))
         {
@@ -316,15 +354,16 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             }            
             wypiszInfo.append("Dzisiaj jest "+pogoda[generator.nextInt(pogoda.length)]+"\n");
         }        
-        else if (!"".equals(komendy.getText()) && komendy.getText()!=null && !"\n".equals(komendy.getText()))
-        {            
-            System.out.println(komendy.getText()+" "+plansza.getClass().toString());//funkcja kontrolna
+        else if (!"".equals(komendy.getText()) && komendy.getText()!=null && !"\n".equals(komendy.getText()) && tak==false)
+        {          
+            System.out.println(komendy.getText()+" "+plansza.getClass().toString());//funkcja kontrolna            
             //wybor=komendy.getText().toLowerCase().trim();       
             if (plansza.getClass().toString().contains("plansza3"))//komendy dla 3 piętra  
             {
+                wypiszInfo.append("Witaj w pokoju króla\n");
                 if (wybor.contains("pomoc"))//pomoc
                 {
-                    wypiszInfo.append("\n");//\n ma być na końcu
+                    wypiszInfo.append("Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n");//\n ma być na końcu
                 }
                 else if(wybor.contains("przejdź na piętro 1"))
                 {
@@ -623,14 +662,22 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             }
         }        
         if (planowany_atak>0)
+        {
+            warunki.append("-Czas pozostały do ataku wrogich wojsk wynosi "+planowany_atak+" dni\n");
             planowany_atak--;
+        }
         if (planowany_atak==0)
+        {
             planowany_atak=-1;
+            plansza3.Armia_Zasoby().addPiechur(-plansza3.Armia_Zasoby().getPiechur());
+            plansza3.Armia_Zasoby().addKusznik(-plansza3.Armia_Zasoby().getKusznik());
+            plansza3.Armia_Zasoby().addHusarz(-plansza3.Armia_Zasoby().getHusarz());
+        }
         //dodawanie zasobów przy przejściu do następnego dnia
-        /*wojsko.addZloto();
-        wojsko.addKamien();
-        wojsko.addDrewno();
-        wojsko.addDiament();*/
+        plansza1.Armia_Zasoby().addZloto(300);
+        plansza1.Armia_Zasoby().addDrewno(30);
+        plansza1.Armia_Zasoby().addKamien(15);
+        plansza1.Armia_Zasoby().addDiament(5);
         return dzien;
     }   
     public Szkielet() throws IOException, JDOMException 
@@ -659,9 +706,13 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         komendy.setForeground(Color.BLACK);
         komendy.setEditable(true);
         komendy.setEnabled(true);
-        komendy.setVisible(true);    
+        komendy.setVisible(true); 
+        warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
+        +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n"); 
+        warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100\n\n");
+        warunki.setEditable(false);
         setResizable(false);
-        aktualne.add(0);        
+        aktualne.add(0);               
         pack();        
         komendy.addActionListener(new java.awt.event.ActionListener() 
         {
@@ -689,13 +740,11 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     public void zmiana_planszy(String wybor) throws InterruptedException, IOException
     {
         //plansza.removeAll();
-        //Interfejs();
+        //Interfejs();        
         remove(plansza);  
-        remove(komendy);
-        remove(wypiszInfo);
+        
         //add(scrollPane);
-        add(komendy); 
-        add(wypiszInfo);
+        
         //komendy.setBounds(250,580,460,25);
         //960x692 - wymiar plansz     
         //wypiszInfo.setBounds(250,600,460,82);//wpierw podajemy współrzedne w poziomie i pionie lewego, górnego rogu, potem wielkość w poziomie i pionie        
