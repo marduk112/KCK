@@ -48,7 +48,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private plansza3 plansza3 = new plansza3();//III piętro-ładowanie planszy
     private boolean pogoda_wykonana=false; // sprawdzanie czy misja sprawdzenia pogody została wykonana
     private int misja=-1;//wybór nr misji
-    private int dzien=1;//dzień w grze
+    private int dzien=0;//dzień w grze
     private int dzien_misja_1=0;
     private boolean zdarzenie_losowe_wiesniacy=false;
     private boolean tworzenie_piechurow=false;
@@ -95,7 +95,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(planszaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(167, Short.MAX_VALUE))
         );
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,7 +132,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             }
             else
             {
-                warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100\n");
+                warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100(pozostało "+(5-dzien)+" dni)\n");
             }
         }
         if (wybor.contains("jak") && (wybor.contains("cos") || wybor.contains("coś")) && (wybor.contains("robić") || wybor.contains("robic")))
@@ -363,7 +363,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 wypiszInfo.append("Witaj w pokoju króla\n");
                 if (wybor.contains("pomoc"))//pomoc
                 {
-                    wypiszInfo.append("Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n");//\n ma być na końcu
+                    wypiszInfo.append("Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n"
+                            + "komendy jakie możesz wykonać to:\n-wyświetl parametry armii wroga\n-wyślij armię po podatki(tylko jeśli posiadasz odpowiednią misję)\n-wypisz liczebność armii wroga\n"
+                            + "-przejdź na piętro 1\n-przejdź na piętro 2\n-przejdź na piętro 3\n");//\n ma być na końcu
                 }
                 else if(wybor.contains("przejdź na piętro 1"))
                 {
@@ -709,7 +711,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         komendy.setVisible(true); 
         warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
         +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n"); 
-        warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100\n\n");
+        warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100(pozostało "+(5-dzien)+" dni)\n");
         warunki.setEditable(false);
         setResizable(false);
         aktualne.add(0);               
