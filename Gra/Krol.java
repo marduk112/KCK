@@ -15,8 +15,8 @@ public class Krol
      */  
         private int kamien=40; // liczba kamieni w zasobach
         private int diament=3; // liczba diamentow w zasobach
-        private int drewno=50; // liczba drewna w zasobach
-        private int zloto=200; //liczba zlota        
+        private int drewno=30; // liczba drewna w zasobach
+        private int zloto=2000; //liczba zlota        
         public int getKamien() { return kamien; } //funkcja przyjmujaca liczbe kamienia
         //public void setKamien(int i) { kamien = i; } //zapisywanie liczby kamienia
         public void addKamien(int i) { kamien += i; } //dodawanie/odejmowanie liczby kamieni

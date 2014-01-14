@@ -66,6 +66,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private String zasob;
     private boolean pomoc;
     private boolean tak=false;
+    private Interpreter xml=new Interpreter();
+    private int interpreter;
+    private String temp;
     private void Interfejs()
     {         
         scrollPane.setViewportView(wypiszInfo);        
@@ -183,8 +186,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");            
             planowany_atak=5;
             warunki.append("-Czas pozostały do ataku wrogich wojsk wynosi "+planowany_atak+" dni\n");
-            plansza3.Armia_Zasoby().addPiechur(3);
-            plansza3.Armia_Zasoby().addKusznik(2);
+            //plansza3..addPiechur(3);
+            //plansza3.Armia_Zasoby().addKusznik(2);
             przyjecie_zasobow=false;
         }
         if (generator.nextInt(50)==1)//zdarzenie losowe
@@ -341,24 +344,231 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         }
         if (wybor.contains("koniec tury"))
             wypiszInfo.append("Rozpoczyna się "+Integer.toString(Nastepny_Dzien())+" dzień\n");        
-        if (wybor.contains("który") && wybor.contains("jest") && wybor.contains("dzień") || wybor.contains("dziś"))
-            wypiszInfo.append("Dziś jest dzień "+Wyswietl_Dzien()+"\n"); 
-        if (wybor.contains("sprawdź") && wybor.contains("pogodę"))
-        {            
-            if (aktualne.contains(Integer.valueOf(2)) && pogoda_wykonana==false)
-            {            
-                wypiszInfo.append("Brawo, spełniłeś warunki misji\n"+misje[2]+"\nOtrzymujesz 300 sztuk złota\n");
-                plansza.Armia_Zasoby().addZloto(300);
-                aktualne.remove(Integer.valueOf(2));
-                pogoda_wykonana=true;
-            }            
-            wypiszInfo.append("Dzisiaj jest "+pogoda[generator.nextInt(pogoda.length)]+"\n");
-        }        
-        else if (!"".equals(komendy.getText()) && komendy.getText()!=null && !"\n".equals(komendy.getText()) && tak==false)
-        {          
-            System.out.println(komendy.getText()+" "+plansza.getClass().toString());//funkcja kontrolna            
-            //wybor=komendy.getText().toLowerCase().trim();       
-            if (plansza.getClass().toString().contains("plansza3"))//komendy dla 3 piętra  
+        
+               
+            wypiszInfo.setForeground(Color.ORANGE);
+            wypiszInfo.append("Komunikat użytkownika "+wybor);
+            wypiszInfo.setForeground(Color.BLACK);
+            //xmlintepreter            
+            interpreter=xml.sprawdzPolecenie(wybor, 0);
+            switch(interpreter)
+            {
+                case 1://wykonujemy czynność przypisaną id 1
+                    wypiszInfo.setForeground(Color.RED);
+                    pomoc();
+                    wypiszInfo.setForeground(Color.BLACK);
+                    break;
+                case 2:
+                    zmiana_planszy("plansza1");
+                    break;
+                case 3:
+                    zmiana_planszy("plansza2");
+                    System.out.println("ccc");
+                    break;
+                case 4:
+                    zmiana_planszy("plansza3");
+                    break;              
+                case 5:
+                    if (wybor.contains("sprawdź") && wybor.contains("pogodę"))
+                    {            
+                        if (aktualne.contains(Integer.valueOf(2)) && pogoda_wykonana==false)
+                        {            
+                            wypiszInfo.append("Brawo, spełniłeś warunki misji\n"+misje[2]+"\nOtrzymujesz 300 sztuk złota\n");
+                            plansza.Armia_Zasoby().addZloto(300);
+                            aktualne.remove(Integer.valueOf(2));
+                            pogoda_wykonana=true;
+                        }            
+                        wypiszInfo.append("Dzisiaj jest "+pogoda[generator.nextInt(pogoda.length)]+"\n");
+                    } 
+                    break;
+                case 6:                     
+                    wypiszInfo.append("Dziś jest dzień "+Wyswietl_Dzien()+"\n"); 
+                    break;                    
+                default:
+                    wypiszInfo.setForeground(Color.RED);
+                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
+                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
+                    pomoc=true;
+                    wypiszInfo.setForeground(Color.BLACK);
+            }
+            interpreter=xml.sprawdzPolecenie(wybor, 1);
+            switch(interpreter)
+            {
+                case 12:
+                    wypiszInfo.append(plansza1.Zasoby()+"\n"); 
+                    break;
+                case 13:
+                    wypiszInfo.append(plansza1.getZloto()+"\n");
+                    break;
+                case 14:
+                    wypiszInfo.append(plansza1.getDiament()+"\n");
+                    break;
+                case 15:
+                    wypiszInfo.append(plansza1.getKamien()+"\n");
+                    break;
+                case 16:
+                    wypiszInfo.append(plansza1.getDrewno()+"\n"); 
+                    break;
+                default:
+                    wypiszInfo.setForeground(Color.RED);
+                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
+                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
+                    pomoc=true;
+                    wypiszInfo.setForeground(Color.BLACK);
+            }
+            interpreter=xml.sprawdzPolecenie(wybor, 2);
+            switch(interpreter)
+            {
+                case 22:
+                    wypiszInfo.append(plansza2.ulepszenia("husarz")+"\n"); 
+                    break;
+                case 23:
+                    if (plansza.Armia_Zasoby().getZloto()>=200*Liczba_Jednostek() && plansza.Armia_Zasoby().getDiament()>=10*Liczba_Jednostek())
+                        {
+                            if (Liczba_Jednostek()>0)
+                            {
+                                try
+                                {         
+                                    liczba_jednostek=Liczba_Jednostek();
+                                    wypiszInfo.append("Zużyjesz na to: "+200*Liczba_Jednostek()+" złota, "+10*Liczba_Jednostek()+" diamentów\nJesteś pewien swojej decyzji\n");
+                                    tworzenie_husarzy=true;
+                                }
+                                catch(NumberFormatException e)
+                                {         
+                                    wypiszInfo.setForeground(Color.RED);
+                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                    wypiszInfo.setForeground(Color.BLACK);
+                                }
+                            }
+                            else 
+                            {
+                                wypiszInfo.setForeground(Color.RED);
+                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                wypiszInfo.setForeground(Color.BLACK);
+                            }
+                        }                            
+                        else
+                        {
+                            wypiszInfo.setForeground(Color.RED);
+                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
+                            wypiszInfo.setForeground(Color.BLACK);
+                        }
+                    break;
+                case 24:
+                    wypiszInfo.append(plansza2.ulepszenia("kusznik")+"\n");
+                    break;
+                case 25:
+                     if (plansza.Armia_Zasoby().getZloto()>=140*Liczba_Jednostek() && plansza.Armia_Zasoby().getKamien()>=7*Liczba_Jednostek())
+                        {
+                            if (Liczba_Jednostek()>0)
+                            {
+                                try
+                                {      
+                                    liczba_jednostek=Liczba_Jednostek();
+                                    wypiszInfo.append("Zużyjesz na to: "+140*Liczba_Jednostek()+" złota, "+7*Liczba_Jednostek()+" kamienia\nJesteś pewien swojej decyzji\n");
+                                    tworzenie_kusznikow=true;
+                                }
+                                catch(NumberFormatException e)
+                                {
+                                    wypiszInfo.setForeground(Color.RED);
+                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                    wypiszInfo.setForeground(Color.BLACK);
+                                }
+                            }
+                            else 
+                            {
+                                wypiszInfo.setForeground(Color.RED);
+                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                wypiszInfo.setForeground(Color.BLACK);
+                            }
+                        }                            
+                        else
+                        {
+                            wypiszInfo.setForeground(Color.RED);
+                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
+                            wypiszInfo.setForeground(Color.BLACK);
+                        }
+                    break;
+                case 26:
+                    wypiszInfo.append(plansza2.ulepszenia("piechur")+"\n");
+                    break;
+                case 27:
+                    if (plansza.Armia_Zasoby().getZloto()>=90*Liczba_Jednostek() && plansza.Armia_Zasoby().getDrewno()>=10*Liczba_Jednostek())
+                        {
+                            if (Liczba_Jednostek()>0)
+                            {
+                                try
+                                {                 
+                                    liczba_jednostek=Liczba_Jednostek();
+                                    wypiszInfo.append("Zużyjesz na to: "+90*Liczba_Jednostek()+" złota, "+10*Liczba_Jednostek()+" drewna\nJesteś pewien swojej decyzji\n");
+                                    tworzenie_piechurow=true;
+                                }
+                                catch(NumberFormatException e)
+                                {
+                                    wypiszInfo.setForeground(Color.RED);
+                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                    wypiszInfo.setForeground(Color.BLACK);
+                                }
+                            }
+                            else 
+                            {
+                                wypiszInfo.setForeground(Color.RED);
+                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
+                                wypiszInfo.setForeground(Color.BLACK);
+                            }
+                        }                            
+                        else
+                        {
+                            wypiszInfo.setForeground(Color.RED);
+                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
+                            wypiszInfo.setForeground(Color.BLACK);
+                        }
+                    break;
+                case 29:
+                    wypiszInfo.append("Najsilniejszą jednostką jest "+plansza2.Najsilniejsza_Jednostka());
+                    break;
+                case 30:
+                    wypiszInfo.append("Najsłabszą jednostką jest "+plansza2.Najslabsza_Jednostka());
+                    break;
+                case 31:
+                    wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Armii())+"\n");
+                    break;
+                case 32:
+                    wypiszInfo.append("Liczba piechurów "+plansza3.Armia_Zasoby().getPiechur());
+                    break;
+                case 33:
+                    wypiszInfo.append("Liczba husarzy "+plansza3.Armia_Zasoby().getHusarz());
+                    break;
+                case 34:
+                    wypiszInfo.append("Liczba kuszników "+plansza3.Armia_Zasoby().getKusznik());
+                    
+                default:
+                    wypiszInfo.setForeground(Color.RED);
+                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
+                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
+                    pomoc=true;
+                    wypiszInfo.setForeground(Color.BLACK);
+            }
+            interpreter=xml.sprawdzPolecenie(wybor, 3);
+            switch(interpreter)
+            {
+                case 35:                    
+                    wypiszInfo.append(plansza3.Liczebnosc_Wojska()+"\n");
+                    wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Armii())+"\n");
+                    wypiszInfo.append(plansza1.wyswietlstatystyki()+"\n");
+                    break;
+                default:
+                    wypiszInfo.setForeground(Color.RED);
+                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
+                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
+                    pomoc=true;
+                    wypiszInfo.setForeground(Color.BLACK);
+            }
+            
+            
+            
+            
+            /*if (plansza.getClass().toString().contains("plansza3"))//komendy dla 3 piętra  
             {
                 wypiszInfo.append("Witaj w pokoju króla\n");
                 if (wybor.contains("pomoc"))//pomoc
@@ -366,7 +576,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     wypiszInfo.append("Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n"
                             + "komendy jakie możesz wykonać to:\n-wyświetl parametry armii wroga\n-wyślij armię po podatki(tylko jeśli posiadasz odpowiednią misję)\n-wypisz liczebność armii wroga\n"
                             + "-przejdź na piętro 1\n-przejdź na piętro 2\n-przejdź na piętro 3\n");//\n ma być na końcu
-                }
+                }              
+                
+                
                 else if(wybor.contains("przejdź na piętro 1"))
                 {
                     zmiana_planszy("plansza1");
@@ -433,7 +645,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 {
                     wypiszInfo.append("Uwaga, zauważyłem, że masz mało diamentów, jeśli wyślesz piechura to możesz zdobyć 50 sztuk dowolnie innego zasobu, wybierz jakiego\n");            
                     malo_diament=true;                                    
-                }
+                }               
             }
             else if(plansza.getClass().toString().contains("plansza2"))//komendy dla 2 piętra
             {
@@ -561,10 +773,10 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                         pomoc=true;
                     }
                 //}                
-               /* if (wybor.contains("wytrenuj piechura"))
+                if (wybor.contains("wytrenuj piechura"))
                 {
                     plansza2.kup_jednostke("wytrenuj piechura", wybor.);
-                }*/
+                }
             }
             else if (plansza.getClass().toString().contains("plansza1"))//komendy dla 1 piętra
             {
@@ -615,9 +827,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     pomoc=true;
                 }
                 
-            }                  
+            }             */     
         komendy.setText("");
-        }
+        
     }       
     private int Liczba_Jednostek()
     {
@@ -815,4 +1027,21 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         // wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji
         // wypiszInfo.append("Brawo, spełniłeś warunki misji        
     }        
+
+    private void pomoc() throws InterruptedException 
+    {
+        if (plansza.getClass().toString().contains("plansza3"))
+        {
+            temp = "Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n"
+                            + "komendy jakie możesz wykonać to:\n-wyświetl parametry armii wroga\n-wyślij armię po podatki(tylko jeśli posiadasz odpowiednią misję)\n-wypisz liczebność armii wroga\n"
+                            + "-przejdź na piętro 1\n-przejdź na piętro 2\n-przejdź na piętro 3\n";
+            for(int i=0;i<temp.length();i++)
+            {
+                System.out.print(Character.toString(temp.charAt(i)));
+                Thread.sleep(250);
+            }
+        }
+        if (plansza.getClass().toString().contains("plansza2"))
+            wypiszInfo.append("");
+    }
 }

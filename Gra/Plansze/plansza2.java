@@ -47,5 +47,43 @@ public class plansza2 extends plansza_podst
         wojsko.ulepsz(jednostka);
         return "Ulepszono "+jednostka;
     }
+    public String Najsilniejsza_Jednostka()
+    {
+        if (wojsko.getAtakh()+wojsko.getObronah() >= wojsko.getAtakk()+wojsko.getObronak())
+        {
+            if (wojsko.getAtakh()+wojsko.getObronah() >= wojsko.getAtakp()+wojsko.getObronap())
+                return "husarz";
+            else
+                return "piechur";
+        }
+        else if (wojsko.getAtakk()+wojsko.getObronak() >= wojsko.getAtakp()+wojsko.getObronap())
+        {
+            if (wojsko.getAtakh()+wojsko.getObronah() >= wojsko.getAtakp()+wojsko.getObronap())
+                return "husarz";
+            else
+                return "piechur";
+        }
+        else
+            return "piechur";
+    }
+    public String Najslabsza_Jednostka()
+    {
+        if (wojsko.getAtakh()+wojsko.getObronah() >= wojsko.getAtakk()+wojsko.getObronak())
+        {
+            if (wojsko.getAtakk()+wojsko.getObronak() >= wojsko.getAtakp()+wojsko.getObronap())
+                return "piechur";
+            else
+                return "kusznik";
+        }
+        else if (wojsko.getAtakk()+wojsko.getObronak() >= wojsko.getAtakp()+wojsko.getObronap())
+        {
+            if (wojsko.getAtakh()+wojsko.getObronah() >= wojsko.getAtakp()+wojsko.getObronap())
+                return "piechur";
+            else
+                return "husarz";
+        }
+        else
+            return "husarz";
+    }
     // suma wszystkich swoich jednostek    
 }

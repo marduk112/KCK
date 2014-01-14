@@ -20,8 +20,8 @@ import javax.swing.JPanel;
  */
 public class plansza_podst extends JPanel
 {
-    static Wojsko wojsko=new Wojsko();
-    static Wojsko wrog=new Wojsko();    
+    public static Wojsko wojsko=new Wojsko();
+    public static Wojsko wrog=new Wojsko();    
     BufferedImage image;    
     /*
     * Ładowanie planszy

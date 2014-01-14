@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<polecenie>
+	<rozkaz id="1">
+		<pietro>0</pietro>
+		<klucz1>pomoc</klucz1>
+		<klucz2></klucz2>
+		<klucz3>pokaz pomoc</klucz3>
+	</rozkaz>
+	<rozkaz id="2">
+		<pietro>0</pietro>
+		<klucz1>pietro</klucz1>
+		<klucz2>pierwsze</klucz2>
+		<klucz3>przejdz na pietro pierwsze</klucz3>
+	</rozkaz>
+	<rozkaz id="3">
+		<pietro>0</pietro>
+		<klucz1>pietro</klucz1>
+		<klucz2>drugie</klucz2>
+		<klucz3>przejdz na pietro drugie</klucz3>
+	</rozkaz>
+	<rozkaz id="4">
+		<pietro>0</pietro>
+		<klucz1>pietro</klucz1>
+		<klucz2>trzecie</klucz2>
+		<klucz3>przejdz na pietro trzecie</klucz3>
+	</rozkaz>
+	<rozkaz id="5">
+		<pietro>0</pietro>
+		<klucz1>sprawdz</klucz1>
+		<klucz2>pogod</klucz2>
+		<klucz3>sprawdz pogode</klucz3>
+	</rozkaz>
+	<rozkaz id="6">
+		<pietro>0</pietro>
+		<klucz1>sprawdz</klucz1>
+		<klucz2>dzien</klucz2>
+		<klucz3>sprawdz dzien tygodnia</klucz3>
+	</rozkaz>
+	<rozkaz id="7">
+		<pietro>1</pietro>
+		<klucz1>sprawdz</klucz1>
+		<klucz2>podd</klucz2>
+		<klucz3>sprawdz co mowia poddani</klucz3>
+	</rozkaz>
+	<rozkaz id="8">
+		<pietro>0</pietro>
+		<klucz1>wstrzym</klucz1>
+		<klucz2>gre</klucz2>
+		<klucz3>wstrzymaj gre</klucz3>
+	</rozkaz>
+	<rozkaz id="9">
+		<pietro>0</pietro>
+		<klucz1>wyjdz</klucz1>
+		<klucz2>menu</klucz2>
+		<klucz3>wyjdz do menu</klucz3>
+	</rozkaz>
+	<rozkaz id="10">
+		<pietro>0</pietro>
+		<klucz1>zapis</klucz1>
+		<klucz2>gre</klucz2>
+		<klucz3>zapisz gre</klucz3>
+	</rozkaz>
+	<rozkaz id="11">
+		<pietro>0</pietro>
+		<klucz1>wczyt</klucz1>
+		<klucz2>ostat</klucz2>
+		<klucz3>wczytaj ostatni zapis</klucz3>
+	</rozkaz>
+	<rozkaz id="12">
+		<pietro>1</pietro>
+		<klucz1>pokaz</klucz1>
+		<klucz2>zasoby</klucz2>
+		<klucz3>pokaz zasoby</klucz3>
+	</rozkaz>
+	<rozkaz id="13">
+		<pietro>1</pietro>
+		<klucz1>pokaz</klucz1>
+		<klucz2>zlot</klucz2>
+		<klucz3>pokaz ile zlota</klucz3>
+	</rozkaz>
+	<rozkaz id="14">
+		<pietro>1</pietro>
+		<klucz1>pokaz</klucz1>
+		<klucz2>diament</klucz2>
+		<klucz3>pokaz ile diamentow</klucz3>
+	</rozkaz>
+	<rozkaz id="15">
+		<pietro>1</pietro>
+		<klucz1>pokaz</klucz1>
+		<klucz2>kamien</klucz2>
+		<klucz3>pokaż ilosc kamieni</klucz3>
+	</rozkaz>
+	<rozkaz id="16">
+		<pietro>1</pietro>
+		<klucz1>pokaz</klucz1>
+		<klucz2>drewn</klucz2>
+		<klucz3>pokaz ilosc drewna</klucz3>
+	</rozkaz>
+	<rozkaz id="17">
+		<pietro>1</pietro>
+		<klucz1>najmniej</klucz1>
+		<klucz2>zasob</klucz2>
+		<klucz3>jakich zasobów mamy najmniej</klucz3>
+	</rozkaz>
+	<rozkaz id="18">
+		<pietro>1</pietro>
+		<klucz1>najwiecej</klucz1>
+		<klucz2>zasob</klucz2>
+		<klucz3>jakich zasobow mamy najwiecej</klucz3>
+	</rozkaz>
+	<rozkaz id="19">
+		<pietro>1</pietro>
+		<klucz1>walk</klucz1>
+		<klucz2>wygr</klucz2>
+		<klucz3>ilosc walk wygranych</klucz3>
+	</rozkaz>
+	<rozkaz id="20">
+		<pietro>1</pietro>
+		<klucz1>walk</klucz1>
+		<klucz2>przegr</klucz2>
+		<klucz3>ilosc walk przegranych</klucz3>
+	</rozkaz>
+	<rozkaz id="21">
+		<pietro>1</pietro>
+		<klucz1>ostatn</klucz1>
+		<klucz2>walk</klucz2>
+		<klucz3>wynik ostatniej walki</klucz3>
+	</rozkaz>
+	<rozkaz id="22">
+		<pietro>2</pietro>
+		<klucz1>wytren</klucz1>
+		<klucz2>husarz</klucz2>
+		<klucz3>wytrenuj husarza</klucz3>
+	</rozkaz>
+	<rozkaz id="23">
+		<pietro>2</pietro>
+		<klucz1>dodaj</klucz1>
+		<klucz2>husarz</klucz2>
+		<klucz3>dodaj husarza</klucz3>
+	</rozkaz>
+	<rozkaz id="24">
+		<pietro>2</pietro>
+		<klucz1>wytren</klucz1>
+		<klucz2>kusznik</klucz2>
+		<klucz3>wytrenuj kusznika</klucz3>
+	</rozkaz>
+	<rozkaz id="25">
+		<pietro>2</pietro>
+		<klucz1>dodaj</klucz1>
+		<klucz2>kusznik</klucz2>
+		<klucz3>dodaj kusznika</klucz3>
+	</rozkaz>
+	<rozkaz id="26">
+		<pietro>2</pietro>
+		<klucz1>wytren</klucz1>
+		<klucz2>piechur</klucz2>
+		<klucz3>wytrenuj piechura</klucz3>
+	</rozkaz>
+	<rozkaz id="27">
+		<pietro>2</pietro>
+		<klucz1>dodaj</klucz1>
+		<klucz2>piechur</klucz2>
+		<klucz3>dodaj piechura</klucz3>
+	</rozkaz>
+	<rozkaz id="28">
+		<pietro>2</pietro>
+		<klucz1>rekrut</klucz1>
+		<klucz2>wojsk</klucz2>
+		<klucz3>rekrutuj wojsko</klucz3>
+	</rozkaz>
+	<rozkaz id="29">
+		<pietro>2</pietro>
+		<klucz1>najsil</klucz1>
+		<klucz2>jednostk</klucz2>
+		<klucz3>pokaz najsilniejsza jednostke</klucz3>
+	</rozkaz>
+	<rozkaz id="30">
+		<pietro>2</pietro>
+		<klucz1>najsłabsz</klucz1>
+		<klucz2>jednostk</klucz2>
+		<klucz3>pokaz najsłabsza jednostke</klucz3>
+	</rozkaz>
+	<rozkaz id="31">
+		<pietro>2</pietro>
+		<klucz1>stan</klucz1>
+		<klucz2>wojsk</klucz2>
+		<klucz3>pokaz stan wojska</klucz3>
+	</rozkaz>
+	<rozkaz id="32">
+		<pietro>2</pietro>
+		<klucz1>ilosc</klucz1>
+		<klucz2>piechur</klucz2>
+		<klucz3>pokaz ilosc piechurow</klucz3>
+	</rozkaz>
+	<rozkaz id="33">
+		<pietro>2</pietro>
+		<klucz1>ilosc</klucz1>
+		<klucz2>husarz</klucz2>
+		<klucz3>pokaz ilosc husarzy</klucz3>
+	</rozkaz>
+	<rozkaz id="34">
+		<pietro>2</pietro>
+		<klucz1>ilosc</klucz1>
+		<klucz2>kusznik</klucz2>
+		<klucz3>pokaz ilosc kusznikow</klucz3>
+	</rozkaz>
+	<rozkaz id="35">
+		<pietro>3</pietro>
+		<klucz1>wyswietl</klucz1>
+		<klucz2>staty</klucz2>
+		<klucz3>wyswietl statystyki</klucz3>
+	</rozkaz>
+	<rozkaz id="36">
+		<pietro>3</pietro>
+		<klucz1>walcz</klucz1>
+		<klucz2></klucz2>
+		<klucz3>walcz</klucz3>
+	</rozkaz>
+	<rozkaz id="37">
+		<pietro>3</pietro>
+		<klucz1>poddaj</klucz1>
+		<klucz2></klucz2>
+		<klucz3>poddaj sie</klucz3>
+	</rozkaz>
+	<rozkaz id="38">
+		<pietro>3</pietro>
+		<klucz1>sila</klucz1>
+		<klucz2>sasiad</klucz2>
+		<klucz3>sprawdz sile sasiedniego zamku</klucz3>
+	</rozkaz>
+	<rozkaz id="39">
+		<pietro>3</pietro>
+		<klucz1>znajdz</klucz1>
+		<klucz2>sojusznik</klucz2>
+		<klucz3>znajdz sojusznikow</klucz3>
+	</rozkaz>
+</polecenie>
