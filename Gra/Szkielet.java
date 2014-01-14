@@ -1027,7 +1027,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         // wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji
         // wypiszInfo.append("Brawo, spełniłeś warunki misji        
     }        
-
+    //metoda obsługująca pomoc dla użytkownika
     private void pomoc() throws InterruptedException 
     {
         if (plansza.getClass().toString().contains("plansza3"))
@@ -1035,13 +1035,16 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             temp = "Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n"
                             + "komendy jakie możesz wykonać to:\n-wyświetl parametry armii wroga\n-wyślij armię po podatki(tylko jeśli posiadasz odpowiednią misję)\n-wypisz liczebność armii wroga\n"
                             + "-przejdź na piętro 1\n-przejdź na piętro 2\n-przejdź na piętro 3\n";
-            for(int i=0;i<temp.length();i++)
+            wypiszInfo.append(temp);
+            /*for(int i=0;i<temp.length();i++)
             {
                 System.out.print(Character.toString(temp.charAt(i)));
                 Thread.sleep(250);
-            }
+            }*/
         }
         if (plansza.getClass().toString().contains("plansza2"))
+            wypiszInfo.append("");
+        if (plansza.getClass().toString().contains("plansza1"))
             wypiszInfo.append("");
     }
 }
