@@ -383,13 +383,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 case 6:                     
                     wypiszInfo.append("Dziś jest dzień "+Wyswietl_Dzien()+"\n"); 
-                    break;                    
-                default:
-                    wypiszInfo.setForeground(Color.RED);
-                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
-                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
-                    pomoc=true;
-                    wypiszInfo.setForeground(Color.BLACK);
+                    break;                
             }
             interpreter=xml.sprawdzPolecenie(wybor, 1);
             switch(interpreter)
@@ -408,13 +402,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 case 16:
                     wypiszInfo.append(plansza1.getDrewno()+"\n"); 
-                    break;
-                default:
-                    wypiszInfo.setForeground(Color.RED);
-                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
-                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
-                    pomoc=true;
-                    wypiszInfo.setForeground(Color.BLACK);
+                    break;                
             }
             interpreter=xml.sprawdzPolecenie(wybor, 2);
             switch(interpreter)
@@ -540,14 +528,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     wypiszInfo.append("Liczba husarzy "+plansza3.Armia_Zasoby().getHusarz());
                     break;
                 case 34:
-                    wypiszInfo.append("Liczba kuszników "+plansza3.Armia_Zasoby().getKusznik());
-                    
-                default:
-                    wypiszInfo.setForeground(Color.RED);
-                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
-                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
-                    pomoc=true;
-                    wypiszInfo.setForeground(Color.BLACK);
+                    wypiszInfo.append("Liczba kuszników "+plansza3.Armia_Zasoby().getKusznik());                   
             }
             interpreter=xml.sprawdzPolecenie(wybor, 3);
             switch(interpreter)
@@ -557,6 +538,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Armii())+"\n");
                     wypiszInfo.append(plansza1.wyswietlstatystyki()+"\n");
                     break;
+                case 36:
+                    wypiszInfo.append(plansza3.Walka());
                 default:
                     wypiszInfo.setForeground(Color.RED);
                     wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
