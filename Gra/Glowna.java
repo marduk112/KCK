@@ -6,7 +6,6 @@ package Gra;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.JDOMException;
 /**
  *
  * @author s384080
@@ -37,7 +36,7 @@ public class Glowna
                 try 
                 {                
                     new Szkielet();
-                } catch (IOException | JDOMException ex) 
+                } catch (IOException ex) 
                 {
                     Logger.getLogger(Glowna.class.getName()).log(Level.SEVERE, null, ex);
                 }

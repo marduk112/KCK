@@ -22,12 +22,13 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import org.jdom2.JDOMException;
+
 public class Szkielet extends JFrame implements MouseListener, MouseMotionListener
 {        
     /*private SAXBuilder builder = new SAXBuilder();
     private File xmlFile = new File("src/interpreter.xml");
     private Document document;*/
+    //private Player animacja = Manager.createPlayer(myURL);
     private plansza_podst plansza;//ładuje menu
     private static String wybor;//przechowuje wprowadzone przez użytkownika polecenie           	
     private final File icon = new File("src/Gra/Plansze/images/menu.jpg");//ikona programu
@@ -65,10 +66,14 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private String inny_zasob;
     private String zasob;
     private boolean pomoc;
-    private boolean tak=false;
     private Interpreter xml=new Interpreter();
     private int interpreter;
     private String temp;
+    private boolean misja2=false;
+    private int poziom_trudnosci_bandyci=0;
+    private boolean atak_bandytow;
+    private int poziom_trudnosci_wrog=0;
+    private boolean misja3=false;    
     private void Interfejs()
     {         
         scrollPane.setViewportView(wypiszInfo);        
@@ -84,7 +89,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             .addComponent(komendy, 300, 662, 962)
             .addGroup(planszaLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(185, Short.MAX_VALUE))
                 
         );
@@ -121,12 +126,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     * tu normalnie będzie za pomocą xml-a, aktualna metoda jest tylko w celach kontrolno/sprawdzających
     */    
     private void komendyActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException, IOException
-    {         
-        tak=false;
+    {                 
         wybor=komendy.getText().toLowerCase().trim();
-        warunki.setText("");
-        warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
-        +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n\n");        
+        warunki.setText("");                
         if (aktualne.contains(Integer.valueOf(0)))
         {
             if (plansza3.Armia_Zasoby().getDefence()>=100)
@@ -137,6 +139,28 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             {
                 warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100(pozostało "+(5-dzien)+" dni)\n");
             }
+        }
+        if (dzien==6 && misja2==false)
+        {
+            wypiszInfo.append("Masz kolejną misję do wykonania, wygraj co najmniej 5 walk\n");
+            misja2=true;            
+        }
+        if (misja2==true)
+            warunki.append("Wygrałeś "+plansza3.Liczba_Walk_Wygranych()+" walk na 5");
+        if (misja2==true && plansza3.Liczba_Walk_Wygranych() >= 5)
+        {
+            wypiszInfo.append("Brawo, wygrałeś "+plansza3.Liczba_Walk_Wygranych()+" walk\n");
+            misja2=false;
+        }
+        if (dzien>6 && misja2==false)
+        {
+            wypiszInfo.append("Sąsiad szykuje inwazję na twoje królestwo.\nZaatakuj go pierwszy\n");
+            warunki.append("Sąsiad szykuje inwazję na twoje królestwo.\nZaatakuj go pierwszy\n");
+            misja3=true;
+        }
+        if (misja3==true)
+        {
+            warunki.append("Sąsiad szykuje inwazję na twoje królestwo.\nZaatakuj go pierwszy\n");            
         }
         if (wybor.contains("jak") && (wybor.contains("cos") || wybor.contains("coś")) && (wybor.contains("robić") || wybor.contains("robic")))
         {
@@ -186,8 +210,13 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             wypiszInfo.append("Wypowiedziałeś wojnę, za 5 dni zostaniesz zaatakowany\n");            
             planowany_atak=5;
             warunki.append("-Czas pozostały do ataku wrogich wojsk wynosi "+planowany_atak+" dni\n");
-            //plansza3..addPiechur(3);
-            //plansza3.Armia_Zasoby().addKusznik(2);
+            plansza.Wrog_Zasoby().addPiechur(-plansza.Wrog_Zasoby().getPiechur());
+            plansza.Wrog_Zasoby().addKusznik(-plansza.Wrog_Zasoby().getKusznik());
+            plansza.Wrog_Zasoby().addHusarz(-plansza.Wrog_Zasoby().getHusarz());
+            plansza.Wrog_Zasoby().addPiechur(generator.nextInt(10)+poziom_trudnosci_wrog);
+            plansza.Wrog_Zasoby().addKusznik(generator.nextInt(10)+poziom_trudnosci_wrog);
+            plansza.Wrog_Zasoby().addHusarz(generator.nextInt(10)+poziom_trudnosci_wrog);
+            poziom_trudnosci_wrog++;
             przyjecie_zasobow=false;
         }
         if (generator.nextInt(50)==1)//zdarzenie losowe
@@ -203,6 +232,17 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 zasob="kamienia";
             wypiszInfo.append("Sąsiednie królestwo w ramach sojuszu przesyła 15 "+zasob+". Przyjmujesz?\n");
             przyjecie_zasobow=true;
+        }
+        if (generator.nextInt(10)==1)
+        {
+            plansza.Bandyci_Zasoby().addPiechur(-plansza.Bandyci_Zasoby().getPiechur());
+            plansza.Bandyci_Zasoby().addKusznik(-plansza.Bandyci_Zasoby().getKusznik());            
+            wypiszInfo.append("Królu, w pobliżu twojego terenu pojawili się kłusownicy\nrozpraw się z nimi.\n");
+            warunki.append("Królu, w pobliżu twojego terenu pojawili się kłusownicy, rozpraw się z nimi.\n");
+            plansza.Bandyci_Zasoby().addPiechur(generator.nextInt(7)+poziom_trudnosci_bandyci);
+            plansza.Bandyci_Zasoby().addKusznik(generator.nextInt(6)+poziom_trudnosci_bandyci);
+            atak_bandytow=true;
+            poziom_trudnosci_bandyci++;
         }
         if (wybor.contains("nie") && pomoc==true)
         {
@@ -306,8 +346,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 misja=-1;
             }             
             else            
-                wypiszInfo.append("Nie wybrałeś żadnej misji\n");  
-            tak=true;
+                wypiszInfo.append("Nie wybrałeś żadnej misji\n");              
         }         
         if (planowany_atak==0)
         {
@@ -344,26 +383,71 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         }
         if (wybor.contains("koniec tury"))
             wypiszInfo.append("Rozpoczyna się "+Integer.toString(Nastepny_Dzien())+" dzień\n");        
+        if (zdarzenie_losowe_wiesniacy==true && (wybor.contains("przekaż") || wybor.contains("przekaz")) && (wybor.contains("złoto") || wybor.contains("zloto")) && (wybor.contains("wieśniakom") || wybor.contains("wiesniakom")))
+        {
+            if (plansza.Armia_Zasoby().getZloto()>200)
+            {
+                plansza.Armia_Zasoby().addZloto(-200);
+                plansza.Armia_Zasoby().addPiechur(1);
+                zdarzenie_losowe_wiesniacy=false;
+                wypiszInfo.append("Wieśniacy są zadowoleni, w zamian jeden z nich dołącza do twojej armii(piechur)");
+            }
+            else
+                wypiszInfo.append("Nie masz wystarczającej ilości złota\n");
+        }        
+        if (wybor.contains("wyślij") && wybor.contains("armię") && wybor.contains("podatki"))
+        {
+            if (aktualne.contains(Integer.valueOf(1)))
+            {
+                if (plansza.Armia_Zasoby().getPiechur()>=3)
+                {
+                    plansza.Armia_Zasoby().addPiechur(-3);                
+                }
+                else
+                {
+                    wypiszInfo.append("Przykro mi, nie spełniłeś warunków misji\n");
+                    dzien_misja_1=0;
+                    aktualne.remove(Integer.valueOf(1));
+                }
+                if (dzien_misja_1==3)
+                {
+                    plansza.Armia_Zasoby().addPiechur(3);
+                    plansza.Armia_Zasoby().addZloto(500);
+                    aktualne.remove(Integer.valueOf(1));
+                    wypiszInfo.append("Brawo, wykonałeś misję\n"+misje[1]+"\nWysłani żołnierze wrócili oraz zdobywasz 500 sztuk złota\n");
+                    dzien_misja_1=0;
+                }
+            }
+            else
+                wypiszInfo.append("Nie masz dostępu do misji\n"+misje[1]+"\n");
+        }  
+        if (wybor.contains("zaatakuj") && (wybor.contains("bandytow") || wybor.contains("bandytów")) && atak_bandytow==true)
+        {
+            wypiszInfo.append(plansza3.Walka_Z_Bandytami()+"\n");
+            atak_bandytow=false;
+        }    
+        else if (atak_bandytow==true)        
+            warunki.append("Królu, w pobliżu twojego terenu pojawili się kłusownicy, rozpraw się z nimi.\n");
         
-               
-            wypiszInfo.setForeground(Color.ORANGE);
-            wypiszInfo.append("Komunikat użytkownika "+wybor);
-            wypiszInfo.setForeground(Color.BLACK);
+            
+            wypiszInfo.append("Komunikat użytkownika: "+wybor+"\n");            
+            interpreter=0;
             //xmlintepreter            
-            interpreter=xml.sprawdzPolecenie(wybor, 0);
+            if ((interpreter=xml.sprawdzPolecenie(wybor, 0)) == 0)
+                if ((interpreter=xml.sprawdzPolecenie(wybor, 1)) == 0)
+                    if ((interpreter=xml.sprawdzPolecenie(wybor, 2)) == 0)
+                        interpreter=xml.sprawdzPolecenie(wybor, 3);
             switch(interpreter)
             {
                 case 1://wykonujemy czynność przypisaną id 1
-                    wypiszInfo.setForeground(Color.RED);
-                    pomoc();
-                    wypiszInfo.setForeground(Color.BLACK);
+                    //wypiszInfo.setForeground(Color.RED);
+                    pomoc();                    
                     break;
                 case 2:
                     zmiana_planszy("plansza1");
                     break;
                 case 3:
-                    zmiana_planszy("plansza2");
-                    System.out.println("ccc");
+                    zmiana_planszy("plansza2");                    
                     break;
                 case 4:
                     zmiana_planszy("plansza3");
@@ -383,11 +467,15 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 case 6:                     
                     wypiszInfo.append("Dziś jest dzień "+Wyswietl_Dzien()+"\n"); 
-                    break;                
-            }
-            interpreter=xml.sprawdzPolecenie(wybor, 1);
-            switch(interpreter)
-            {
+                    break;   
+                case 7:
+                    if (generator.nextInt(3) == 0)
+                        wypiszInfo.append("&Poddani są zadowoleni&\n");
+                    else if (generator.nextInt(3) == 1)
+                        wypiszInfo.append("&Poddani są niezadowoleni&\n");
+                    else
+                        wypiszInfo.append("&Poddani są obojętnie nastawieni&\n");
+                    break;
                 case 12:
                     wypiszInfo.append(plansza1.Zasoby()+"\n"); 
                     break;
@@ -402,11 +490,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 case 16:
                     wypiszInfo.append(plansza1.getDrewno()+"\n"); 
-                    break;                
-            }
-            interpreter=xml.sprawdzPolecenie(wybor, 2);
-            switch(interpreter)
-            {
+                    break;  
                 case 22:
                     wypiszInfo.append(plansza2.ulepszenia("husarz")+"\n"); 
                     break;
@@ -423,23 +507,23 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                                 }
                                 catch(NumberFormatException e)
                                 {         
-                                    wypiszInfo.setForeground(Color.RED);
-                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
-                                    wypiszInfo.setForeground(Color.BLACK);
+                                    //wypiszInfo.setForeground(Color.RED);
+                                    wypiszInfo.append("* Podana liczba musi być liczbą całkowitą dodatnią *\n");
+                                    //wypiszInfo.setForeground(Color.BLACK);
                                 }
                             }
                             else 
                             {
-                                wypiszInfo.setForeground(Color.RED);
-                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
-                                wypiszInfo.setForeground(Color.BLACK);
+                                //wypiszInfo.setForeground(Color.RED);
+                                wypiszInfo.append("* Podana liczba musi być liczbą całkowitą dodatnią *\n");
+                                //wypiszInfo.setForeground(Color.BLACK);
                             }
                         }                            
                         else
                         {
-                            wypiszInfo.setForeground(Color.RED);
-                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
-                            wypiszInfo.setForeground(Color.BLACK);
+                            //wypiszInfo.setForeground(Color.RED);
+                            wypiszInfo.append("* Nie masz wystarczającej ilości surowców *\n");
+                            //wypiszInfo.setForeground(Color.BLACK);
                         }
                     break;
                 case 24:
@@ -458,27 +542,27 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                                 }
                                 catch(NumberFormatException e)
                                 {
-                                    wypiszInfo.setForeground(Color.RED);
-                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
-                                    wypiszInfo.setForeground(Color.BLACK);
+                                    //wypiszInfo.setForeground(Color.RED);
+                                    wypiszInfo.append("* Podana liczba musi być liczbą całkowitą dodatnią *\n");
+                                    //wypiszInfo.setForeground(Color.BLACK);
                                 }
                             }
                             else 
                             {
-                                wypiszInfo.setForeground(Color.RED);
-                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
-                                wypiszInfo.setForeground(Color.BLACK);
+                                //wypiszInfo.setForeground(Color.RED);
+                                wypiszInfo.append("* Podana liczba musi być liczbą całkowitą dodatnią *\n");
+                                //wypiszInfo.setForeground(Color.BLACK);
                             }
                         }                            
                         else
                         {
-                            wypiszInfo.setForeground(Color.RED);
-                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
-                            wypiszInfo.setForeground(Color.BLACK);
+                            //wypiszInfo.setForeground(Color.RED);
+                            wypiszInfo.append("* Nie masz wystarczającej ilości surowców *\n");
+                            //wypiszInfo.setForeground(Color.BLACK);
                         }
                     break;
                 case 26:
-                    wypiszInfo.append(plansza2.ulepszenia("piechur")+"\n");
+                    //wypiszInfo.append(plansza2.ulepszenia("piechur")+"\n");
                     break;
                 case 27:
                     if (plansza.Armia_Zasoby().getZloto()>=90*Liczba_Jednostek() && plansza.Armia_Zasoby().getDrewno()>=10*Liczba_Jednostek())
@@ -493,23 +577,23 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                                 }
                                 catch(NumberFormatException e)
                                 {
-                                    wypiszInfo.setForeground(Color.RED);
-                                    wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
-                                    wypiszInfo.setForeground(Color.BLACK);
+                                    //wypiszInfo.setForeground(Color.RED);
+                                    wypiszInfo.append("* Podana liczba musi być liczbą całkowitą dodatnią *\n");
+                                    //wypiszInfo.setForeground(Color.BLACK);
                                 }
                             }
                             else 
                             {
-                                wypiszInfo.setForeground(Color.RED);
-                                wypiszInfo.append("Podana liczba musi być liczbą całkowitą dodatnią\n");
-                                wypiszInfo.setForeground(Color.BLACK);
+                                //wypiszInfo.setForeground(Color.RED);
+                                wypiszInfo.append("* Podana liczba musi być liczbą całkowitą dodatnią *\n");
+                                //wypiszInfo.setForeground(Color.BLACK);
                             }
                         }                            
                         else
                         {
-                            wypiszInfo.setForeground(Color.RED);
-                            wypiszInfo.append("Nie masz wystarczającej ilości surowców\n");
-                            wypiszInfo.setForeground(Color.BLACK);
+                            //wypiszInfo.setForeground(Color.RED);
+                            wypiszInfo.append("* Nie masz wystarczającej ilości surowców *\n");
+                            //wypiszInfo.setForeground(Color.BLACK);
                         }
                     break;
                 case 29:
@@ -528,11 +612,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     wypiszInfo.append("Liczba husarzy "+plansza3.Armia_Zasoby().getHusarz());
                     break;
                 case 34:
-                    wypiszInfo.append("Liczba kuszników "+plansza3.Armia_Zasoby().getKusznik());                   
-            }
-            interpreter=xml.sprawdzPolecenie(wybor, 3);
-            switch(interpreter)
-            {
+                    wypiszInfo.append("Liczba kuszników "+plansza3.Armia_Zasoby().getKusznik()); 
                 case 35:                    
                     wypiszInfo.append(plansza3.Liczebnosc_Wojska()+"\n");
                     wypiszInfo.append("Atak Armii: "+Integer.toString(plansza3.Wyswietlenie_Ataku_Armii())+"\nObrona Armii: "+Integer.toString(plansza3.Wyswietlenie_Obrony_Armii())+"\n");
@@ -540,16 +620,22 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 case 36:
                     wypiszInfo.append(plansza3.Walka());
+                case 40:
+                    plansza.Wrog_Zasoby().addPiechur(-plansza.Wrog_Zasoby().getPiechur());
+                    plansza.Wrog_Zasoby().addKusznik(-plansza.Wrog_Zasoby().getKusznik());
+                    plansza.Wrog_Zasoby().addHusarz(-plansza.Wrog_Zasoby().getHusarz());
+                    plansza.Wrog_Zasoby().addPiechur(generator.nextInt(30)+poziom_trudnosci_wrog);
+                    plansza.Wrog_Zasoby().addKusznik(generator.nextInt(15)+poziom_trudnosci_wrog);
+                    plansza.Wrog_Zasoby().addHusarz(generator.nextInt(5)+poziom_trudnosci_wrog);
+                    wypiszInfo.append(plansza3.Walka());
+                    break;
                 default:
-                    wypiszInfo.setForeground(Color.RED);
-                    wypiszInfo.append("Źle wprowadziles polecenie\nMoże ci pomóc?\n");
-                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić?\n");
+                    //wypiszInfo.setForeground(Color.RED);
+                    wypiszInfo.append("* Źle wprowadziles polecenie\nMoże ci pomóc?\n");
+                    wypiszInfo.append("Wpisz odpowiednie polecenie w konsoli. Jeśli chcesz modyfikować wojsko przejdź wcześniej do zbrojowni, dostępne zasoby sprawdzisz w skarbcu a w komnacie króla przejdziesz do trybu walki. Czy już wiesz co zrobić? *\n");
                     pomoc=true;
-                    wypiszInfo.setForeground(Color.BLACK);
-            }
-            
-            
-            
+                    //wypiszInfo.setForeground(Color.BLACK);   
+            }     
             
             /*if (plansza.getClass().toString().contains("plansza3"))//komendy dla 3 piętra  
             {
@@ -811,6 +897,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 }
                 
             }             */     
+        warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
+        +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n\n");
         komendy.setText("");
         
     }       
@@ -871,17 +959,17 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             plansza3.Armia_Zasoby().addHusarz(-plansza3.Armia_Zasoby().getHusarz());
         }
         //dodawanie zasobów przy przejściu do następnego dnia
-        plansza1.Armia_Zasoby().addZloto(300);
-        plansza1.Armia_Zasoby().addDrewno(30);
-        plansza1.Armia_Zasoby().addKamien(15);
-        plansza1.Armia_Zasoby().addDiament(5);
+        plansza1.Armia_Zasoby().addZloto(500);
+        plansza1.Armia_Zasoby().addDrewno(60);
+        plansza1.Armia_Zasoby().addKamien(30);
+        plansza1.Armia_Zasoby().addDiament(6);
         return dzien;
     }   
-    public Szkielet() throws IOException, JDOMException 
+    public Szkielet() throws IOException
     {        
-        super("Gra Zamek");  
+        super("Gra Zamek");     
         image = ImageIO.read(icon);
-        komendy.setText("Tu wpisujemy polecenia");   
+        komendy.setText("Tu wpisujemy polecenia");        
         //wypiszInfo.setOpaque(true);
         /*document = (Document) builder.build(xmlFile);
         Element rootNode = document.getRootElement();
@@ -896,7 +984,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
         setVisible(true); 
         setIconImage(image);  
-        wypiszInfo.setForeground(Color.BLACK);             
+        //wypiszInfo.setForeground(Color.BLACK);             
         wypiszInfo.setEnabled(true);
         wypiszInfo.setEditable(false);
         wypiszInfo.setVisible(true);        
@@ -904,9 +992,11 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         komendy.setEditable(true);
         komendy.setEnabled(true);
         komendy.setVisible(true); 
-        warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
-        +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n"); 
+        wypiszInfo.setWrapStyleWord(true);
+        warunki.setWrapStyleWord(true);
         warunki.append("-Masz "+plansza3.Armia_Zasoby().getDefence()+" punktów obrony, potrzebujesz 100(pozostało "+(5-dzien)+" dni)\n");
+        warunki.append("Zasoby:\n-złoto: "+plansza1.Armia_Zasoby().getZloto()+"\n-drewno: "+plansza1.Armia_Zasoby().getDrewno()
+        +"\n-kamień: "+plansza1.Armia_Zasoby().getKamien()+"\n-diament: "+plansza1.Armia_Zasoby().getDiament()+"\n");         
         warunki.setEditable(false);
         setResizable(false);
         aktualne.add(0);               
@@ -1018,16 +1108,24 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             temp = "Na tym piętrze możesz wydawać rozkazy ataku, sprawdzić siły swoje i wroga,\nwysłać armię po podatki po wyborze misji\n"
                             + "komendy jakie możesz wykonać to:\n-wyświetl parametry armii wroga\n-wyślij armię po podatki(tylko jeśli posiadasz odpowiednią misję)\n-wypisz liczebność armii wroga\n"
                             + "-przejdź na piętro 1\n-przejdź na piętro 2\n-przejdź na piętro 3\n";
-            wypiszInfo.append(temp);
-            /*for(int i=0;i<temp.length();i++)
-            {
-                System.out.print(Character.toString(temp.charAt(i)));
-                Thread.sleep(250);
-            }*/
+            //wypiszInfo.append(temp);
+            //for(int i=0;i<temp.length();i++)
+            //{                                        
+                wypiszInfo.append("* "+temp+" *\n");
+           //}
         }
         if (plansza.getClass().toString().contains("plansza2"))
-            wypiszInfo.append("");
+            wypiszInfo.append("* "+"Na tym piętrze znajduje się zbrojowania"
+                    + "\n, możesz w niej szkolić nowych oraz ulepszać"
+                    + "\naktualnych żołnierzy.\n"
+                    + "Na tym piętrze możesz wykonać następujące polecenia:"
+                    + "\n-wytrenuj husarza\n-dodaj husarza\n-wytrenuj kusznika\n"
+                    + "-dodaj kusznika\n-wytrenuj piechura\n-dodaj piechura"
+                    + "\n-pokaż najsłabszą jednostkę\n-pokaż stan wojska"+" *\n");
         if (plansza.getClass().toString().contains("plansza1"))
-            wypiszInfo.append("");
+            wypiszInfo.append("* "+"Na tym piętrze znajduje się skarbiec.\nKomendy jakie możesz"
+                    + "wykonać to:\n-pokaż zasoby\n-pokaż ile złota\n-pokaż ile diamentów"
+                    + "\n-pokaż ile kamieni\n-pokaż ile drewna\n-jakich zasobów mamy najwięcej\n"
+                    + "-jakich zasobów mamy najmniej\n-pokaż ilość walk wygranych\n-pokaż ilość walki przegranych"+" *\n");
     }
 }

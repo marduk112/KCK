@@ -233,5 +233,10 @@
 		<klucz1>znajdz</klucz1>
 		<klucz2>sojusznik</klucz2>
 		<klucz3>znajdz sojusznikow</klucz3>
+	<rozkaz id="40">
+		<pietro>3</pietro>
+		<klucz1>zaatakuj</klucz1>
+		<klucz2>zamek</klucz2>
+		<klucz3>zaatakuj wrogi zamek</klucz3>
 	</rozkaz>
 </polecenie>

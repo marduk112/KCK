@@ -22,6 +22,7 @@ public class plansza_podst extends JPanel
 {
     public static Wojsko wojsko=new Wojsko();
     public static Wojsko wrog=new Wojsko();    
+    public static Wojsko bandyci=new Wojsko();     
     BufferedImage image;    
     /*
     * Ładowanie planszy
@@ -57,5 +58,13 @@ public class plansza_podst extends JPanel
     public Wojsko Armia_Zasoby()
     {
         return wojsko;
+    }   
+    public Wojsko Wrog_Zasoby()
+    {
+        return wrog;
+    }    
+    public Wojsko Bandyci_Zasoby()
+    {
+        return bandyci;
     }    
 }

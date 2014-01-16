@@ -19,6 +19,8 @@ public class plansza3 extends plansza_podst
      * private static int drewno; // liczba drewna w zasobach
      * private static int zloto; //liczba zlota 
      */   
+    private int walki_wygrane=0;
+    private int walki_przegrane=0;
     public plansza3() throws IOException
     {
         super("stage3.jpg");        
@@ -26,7 +28,7 @@ public class plansza3 extends plansza_podst
     private String Utrata_Jednostek(float procent)
     {        
         int pomoc=(int)(wojsko.Liczba_Jednostek()*procent);
-        int zwroc=pomoc;        
+        int zwroc=pomoc;       
         if (wojsko.getObronah()<wojsko.getObronak())
         {
             if (wojsko.getObronah()<wojsko.getObronap())
@@ -195,10 +197,11 @@ public class plansza3 extends plansza_podst
                 }
             }
         }
-        wojsko.addDrewno(wrog.getPiechur()*7);
-        wojsko.addKamien(wrog.getKusznik()*5);
-        wojsko.addZloto(wrog.getPiechur()*3+wrog.getKusznik()*3+wrog.getHusarz()*2);
-        wojsko.addDiament(wrog.getHusarz()*3);        
+        wojsko.addDrewno(wrog.getPiechur()*10);
+        wojsko.addKamien(wrog.getKusznik()*8);
+        wojsko.addZloto(wrog.getPiechur()*10+wrog.getKusznik()*20+wrog.getHusarz()*30);
+        wojsko.addDiament(wrog.getHusarz()*5);     
+        walki_wygrane++;
         return "Wygrałeś. Utraciłeś "+zwroc+" jednostek\n";
     }    
     /*
@@ -244,8 +247,53 @@ public class plansza3 extends plansza_podst
             wojsko.dodaj("piechur",-wojsko.getPiechur());
             wojsko.dodaj("kusznik",-wojsko.getKusznik());
             wojsko.dodaj("husarz",-wojsko.getHusarz());
+            walki_przegrane++;
             return "Utraciłeś wszystkie jednostki\n";
         }        
+    }
+    public String Walka_Z_Bandytami()
+    {
+        if (wojsko.getDefence()>bandyci.getDefence() && bandyci.getDefence()*1.7 < wojsko.getDefence() && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.8)
+            return Utrata_Jednostek((float)0.1);
+        if (wojsko.getDefence()>bandyci.getDefence() && (bandyci.getDefence()*1.5 < wojsko.getDefence() && wojsko.getDefence() <= bandyci.getDefence()*1.7) && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.8)
+            return Utrata_Jednostek((float)0.3);
+        if (wojsko.getDefence()>bandyci.getDefence() && (bandyci.getDefence()*1.3 < wojsko.getDefence() && wojsko.getDefence() <= bandyci.getDefence()*1.5) && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.8)
+            return Utrata_Jednostek((float)0.5);
+        if (wojsko.getDefence()>bandyci.getDefence() && bandyci.getDefence()*1.3 >= wojsko.getDefence() && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.8)        
+            return Utrata_Jednostek((float)0.7);  
+        if (wojsko.getDefence()>bandyci.getDefence() && (bandyci.getDefence()*1.5 < wojsko.getDefence() && wojsko.getDefence()<=bandyci.getDefence()*1.7) && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.5)
+            return Utrata_Jednostek((float)0.5);
+        if (wojsko.getDefence()>bandyci.getDefence() && (bandyci.getDefence()*1.3 < wojsko.getDefence() && wojsko.getDefence()<=bandyci.getDefence()*1.5) && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.5)
+            return Utrata_Jednostek((float)0.7);
+        if (wojsko.getDefence()>bandyci.getDefence() && bandyci.getDefence()*1.3 >= wojsko.getDefence() && wojsko.getAttack()<bandyci.getAttack() && wojsko.getAttack()>=bandyci.getAttack()*0.5)        
+            return Utrata_Jednostek((float)0.9);        
+        if (wojsko.getDefence()>bandyci.getDefence() && wojsko.getAttack()>bandyci.getAttack())        
+            return Utrata_Jednostek((float)0.05);
+        //zmiana z obrony na atak
+        if (wojsko.getAttack()>bandyci.getAttack() && bandyci.getAttack()*1.7 < wojsko.getAttack() && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.8)
+            return Utrata_Jednostek((float)0.1);
+        if (wojsko.getAttack()>bandyci.getAttack() && (bandyci.getAttack()*1.5 < wojsko.getAttack() && wojsko.getAttack() <= bandyci.getAttack()*1.7) && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.8)
+            return Utrata_Jednostek((float)0.3);
+        if (wojsko.getAttack()>bandyci.getAttack() && (bandyci.getAttack()*1.3 < wojsko.getAttack() && wojsko.getAttack() <= bandyci.getAttack()*1.5) && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.8)
+            return Utrata_Jednostek((float)0.5);
+        if (wojsko.getAttack()>bandyci.getAttack() && bandyci.getAttack()*1.3 >= wojsko.getAttack() && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.8)        
+            return Utrata_Jednostek((float)0.7);  
+        if (wojsko.getAttack()>bandyci.getAttack() && (bandyci.getAttack()*1.5 < wojsko.getAttack() && wojsko.getAttack()<=bandyci.getAttack()*1.7) && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.5)
+            return Utrata_Jednostek((float)0.5);
+        if (wojsko.getAttack()>bandyci.getAttack() && (bandyci.getAttack()*1.3 < wojsko.getAttack() && wojsko.getAttack()<=bandyci.getAttack()*1.5) && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.5)
+            return Utrata_Jednostek((float)0.7);
+        if (wojsko.getAttack()>bandyci.getAttack() && bandyci.getAttack()*1.3 >= wojsko.getAttack() && wojsko.getDefence()<bandyci.getDefence() && wojsko.getDefence()>=bandyci.getDefence()*0.5)        
+            return Utrata_Jednostek((float)0.9);        
+        if (wojsko.getAttack()>bandyci.getAttack() && wojsko.getDefence()>bandyci.getDefence())        
+            return Utrata_Jednostek((float)0.05);        
+        else
+        {
+            wojsko.dodaj("piechur",-wojsko.getPiechur());
+            wojsko.dodaj("kusznik",-wojsko.getKusznik());
+            wojsko.dodaj("husarz",-wojsko.getHusarz());
+            walki_przegrane++;
+            return "Utraciłeś wszystkie jednostki\n";
+        }  
     }
     public String Liczebnosc_Wojska_Wroga()
     {
@@ -271,5 +319,13 @@ public class plansza3 extends plansza_podst
     public int Wyswietlenie_Obrony_Wroga()
     {
         return wrog.getDefence();
+    }
+    public int Liczba_Walk_Przegranych()
+    {
+        return walki_przegrane;
+    }
+    public int Liczba_Walk_Wygranych()
+    {
+        return walki_wygrane;
     }
 }
