@@ -25,7 +25,7 @@ public class Interpreter
         {
 		try {
 			 
-			File fXmlFile = new File("src/KCK/Gra/xml/term.xml");
+			File fXmlFile = new File("src/Gra/xml/term.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
