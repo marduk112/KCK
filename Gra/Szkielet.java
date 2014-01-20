@@ -1,11 +1,12 @@
 package Gra;
 
+import Gra.Plansze.Statystyki;
 import Gra.Plansze.menu;
 import Gra.Plansze.plansza1;
 import Gra.Plansze.plansza2;
 import Gra.Plansze.plansza3;
 import Gra.Plansze.plansza_podst;
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -32,7 +33,7 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private plansza_podst plansza;//ładuje menu
     private static String wybor;//przechowuje wprowadzone przez użytkownika polecenie           	
     private final File icon = new File("src/Gra/Plansze/images/menu.jpg");//ikona programu
-    private final BufferedImage image;//ładowanie ikony
+    private BufferedImage image;//ładowanie ikony
     //tablica z wszystkimi misjami
     private final String[] misje={"","- Królu! Brakuje nam złota w skarbcu, wyślij armię do pobliskiej wioski, aby zebrali podatki.","- Witaj królu, to ja Twój  błazen. Wyjrzyj przez okno jaka jest dziś pogoda, a dostaniesz 300 sztuk złota."};
     //tablica z aktualnie wykonywanymi misjami,przechowuje nr indeksu z tablicy misje
@@ -73,15 +74,33 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
     private int poziom_trudnosci_bandyci=0;
     private boolean atak_bandytow;
     private int poziom_trudnosci_wrog=0;
-    private boolean misja3=false;    
+    private boolean misja3=false; 
+    private Statystyki Statystyki;  
+    private javax.swing.JLabel Statystyki_Wartosc;
     private void Interfejs()
-    {         
+    {        
         scrollPane.setViewportView(wypiszInfo);        
         warunki.setColumns(10);
         warunki.setRows(3);
         zawijanie.setViewportView(warunki);
         javax.swing.GroupLayout planszaLayout = new javax.swing.GroupLayout(plansza);
         plansza.setLayout(planszaLayout);
+        javax.swing.GroupLayout StatystykiLayout = new javax.swing.GroupLayout(Statystyki);
+        Statystyki.setLayout(StatystykiLayout);
+        StatystykiLayout.setHorizontalGroup(//wspolrzedne osi OX
+            StatystykiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)                         
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StatystykiLayout.createSequentialGroup()
+                        .addContainerGap(480, Short.MAX_VALUE)
+                        .addComponent(Statystyki_Wartosc)  
+                          .addGap(380, 380, 380))                                        
+        );
+        StatystykiLayout.setVerticalGroup(//wspolrzedne osi OY
+            StatystykiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)            
+                .addGroup(StatystykiLayout.createSequentialGroup()                 
+                .addGap(250, 250, 250)     
+                .addComponent(Statystyki_Wartosc)
+                .addContainerGap(211, Short.MAX_VALUE))
+        );
         planszaLayout.setHorizontalGroup
         (                
             planszaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)            
@@ -91,6 +110,10 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
             .addContainerGap()
             .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(185, Short.MAX_VALUE))
+                .addGap(100, 282, 382)
+                .addComponent(Statystyki,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                //.addContainerGap(111, Short.MAX_VALUE));
+        
                 
         );
         planszaLayout.setVerticalGroup
@@ -105,6 +128,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                 .addContainerGap()
                 .addComponent(zawijanie, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(167, Short.MAX_VALUE))
+                .addGap(100, 151, 151)
+                .addComponent(Statystyki, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               // .addContainerGap(102, Short.MAX_VALUE))
         );
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -429,7 +455,8 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         else if (atak_bandytow==true)        
             warunki.append("Królu, w pobliżu twojego terenu pojawili się kłusownicy, rozpraw się z nimi.\n");
         
-            
+            Statystyki.setVisible(false);
+            Statystyki_Wartosc.setVisible(false);
             wypiszInfo.append("Komunikat użytkownika: "+wybor+"\n");            
             interpreter=0;
             //xmlintepreter            
@@ -478,6 +505,9 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
                     break;
                 case 12:
                     wypiszInfo.append(plansza1.Zasoby()+"\n"); 
+                    Statystyki.setVisible(true);
+                    Statystyki_Wartosc.setVisible(true);                                                             
+                    Statystyki_Wartosc.setText("Ilosc zlota:"+String.valueOf(plansza1.getZloto()));
                     break;
                 case 13:
                     wypiszInfo.append(plansza1.getZloto()+"\n");
@@ -984,11 +1014,17 @@ public class Szkielet extends JFrame implements MouseListener, MouseMotionListen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
         setVisible(true); 
         setIconImage(image);  
-        //wypiszInfo.setForeground(Color.BLACK);             
+        //wypiszInfo.setForeground(Color.BLACK); 
+        Statystyki_Wartosc = new javax.swing.JLabel();
+        Statystyki_Wartosc.setVisible(false);
+        Statystyki_Wartosc.setFont(new java.awt.Font("Old English Text MT", 0, 24));           
+        Statystyki = new Statystyki("zasoby.jpg");
+        Statystyki.setOpaque(false);        
+        Statystyki.setPreferredSize(new Dimension(962,692));
+        Statystyki.setVisible(false);
         wypiszInfo.setEnabled(true);
         wypiszInfo.setEditable(false);
         wypiszInfo.setVisible(true);        
-        komendy.setForeground(Color.BLACK);
         komendy.setEditable(true);
         komendy.setEnabled(true);
         komendy.setVisible(true); 
