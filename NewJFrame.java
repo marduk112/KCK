@@ -30,62 +30,94 @@ public class NewJFrame extends javax.swing.JFrame {
 
         query1 = java.beans.Beans.isDesignTime() ? null : ((javax.persistence.EntityManager)null).createQuery("");
         plansza = new javax.swing.JPanel();
-        Statystyki = new javax.swing.JPanel();
-        Statystyki_Wartosc = new javax.swing.JLabel();
+        komendy_pole = new javax.swing.JPanel();
+        komendy = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Statystyki_Wartosc.setFont(new java.awt.Font("Old English Text MT", 0, 24)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("KCK/Bundle"); // NOI18N
-        Statystyki_Wartosc.setText(bundle.getString("NewJFrame.Statystyki_Wartosc.text")); // NOI18N
+        plansza.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                planszaKeyPressed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout StatystykiLayout = new javax.swing.GroupLayout(Statystyki);
-        Statystyki.setLayout(StatystykiLayout);
-        StatystykiLayout.setHorizontalGroup(
-            StatystykiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StatystykiLayout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
-                .addComponent(Statystyki_Wartosc)
-                .addGap(62, 62, 62))
+        javax.swing.GroupLayout komendy_poleLayout = new javax.swing.GroupLayout(komendy_pole);
+        komendy_pole.setLayout(komendy_poleLayout);
+        komendy_poleLayout.setHorizontalGroup(
+            komendy_poleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        StatystykiLayout.setVerticalGroup(
-            StatystykiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(StatystykiLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(Statystyki_Wartosc)
-                .addContainerGap(210, Short.MAX_VALUE))
+        komendy_poleLayout.setVerticalGroup(
+            komendy_poleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 35, Short.MAX_VALUE)
         );
+
+        komendy.setFont(new java.awt.Font("Old English Text MT", 0, 18)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("KCK/Bundle"); // NOI18N
+        komendy.setText(bundle.getString("NewJFrame.komendy.text")); // NOI18N
+        komendy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                komendyActionPerformed(evt);
+            }
+        });
+        komendy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                komendyKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout planszaLayout = new javax.swing.GroupLayout(plansza);
         plansza.setLayout(planszaLayout);
         planszaLayout.setHorizontalGroup(
             planszaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(planszaLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(Statystyki, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(648, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planszaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(komendy_pole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planszaLayout.createSequentialGroup()
+                .addContainerGap(476, Short.MAX_VALUE)
+                .addComponent(komendy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(389, 389, 389))
         );
         planszaLayout.setVerticalGroup(
             planszaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(planszaLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(Statystyki, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, planszaLayout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(komendy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
+                .addComponent(komendy_pole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(117, 117, 117))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(plansza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(plansza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(plansza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(plansza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void komendyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_komendyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_komendyActionPerformed
+
+    private void komendyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_komendyKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_komendyKeyPressed
+
+    private void planszaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_planszaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_planszaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -123,8 +155,8 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Statystyki;
-    private javax.swing.JLabel Statystyki_Wartosc;
+    private javax.swing.JTextField komendy;
+    private javax.swing.JPanel komendy_pole;
     private javax.swing.JPanel plansza;
     private javax.persistence.Query query1;
     // End of variables declaration//GEN-END:variables

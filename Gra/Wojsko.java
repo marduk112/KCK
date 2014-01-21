@@ -23,7 +23,7 @@ public class Wojsko extends Krol
     //public Krol krol=new Krol();
     
     
-        public int liczebność(){return husarz+kusznik+piechur;}
+        public int liczebnosc(){return husarz+kusznik+piechur;}
         public int getHusarz() { return husarz; } //zwraca wartosc husarz
         //public void setHusarz(int i) { husarz = i; } // zmienia wartosc husarz
         public void addHusarz(int i) { husarz += i; } //dodawanie/odejmowanie liczby husarzy,

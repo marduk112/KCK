@@ -4,8 +4,6 @@ package Gra;
  * and open the template in the editor.
  */
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author s384080
@@ -14,7 +12,7 @@ public class Glowna
 {   
     public static void main(String args[]) throws IOException
     {
-        try 
+        /*try 
         {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) 
             {
@@ -34,13 +32,13 @@ public class Glowna
             public void run() 
             {
                 try 
-                {                
+                {       */         
                     new Szkielet();
-                } catch (IOException ex) 
+                /*} catch (IOException ex) 
                 {
                     Logger.getLogger(Glowna.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });        
+        });    */    
     }    
 }

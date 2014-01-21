@@ -21,7 +21,7 @@ public class plansza1 extends plansza_podst
     }      
     public String Zasoby()
     {
-        return "Liczba kamienia = "+wojsko.getKamien()+"\n"+"Liczba diamentu = "+wojsko.getDiament()+"\n"+"Liczba drewna = "+wojsko.getDrewno()+"\n"+"Liczba złota = "+wojsko.getZloto();
+        return "Liczba kamienia = "+wojsko.getKamien()+"\n"+"Liczba diamentu = "+wojsko.getDiament()+"\n"+"Liczba drewna = "+wojsko.getDrewno()+"\n"+"Liczba zlota = "+wojsko.getZloto();
     }
     public String wyswietlstatystyki()
     {

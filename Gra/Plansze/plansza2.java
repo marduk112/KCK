@@ -39,7 +39,7 @@ public class plansza2 extends plansza_podst
         }
         catch(NumberFormatException e)
         {
-            return "Podana liczba musi być liczbą naturalną, np. 1,2,3 itd...";
+            return "Podana liczba musi byc liczbą naturalna, np. 1,2,3 itd...";
         }
     }
     public String ulepszenia(String jednostka)
